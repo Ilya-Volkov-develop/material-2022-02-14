@@ -5,18 +5,18 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
+import ru.iliavolkov.material.view.MainActivity
 import viewmodel.PictureOfTheDayViewModel
 import viewmodel.appstate.AppStatePictureOfTheDay
 
@@ -41,6 +41,28 @@ class MainFragment : Fragment() {
                 data  = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
             })
         }
+        (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_bottom_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_fav -> {
+                Toast.makeText(requireContext(), "app_bar_fav", Toast.LENGTH_SHORT).show()
+            }
+            R.id.app_bar_settings -> {
+                Toast.makeText(requireContext(), "app_bar_settings", Toast.LENGTH_SHORT).show()
+            }
+            android.R.id.home -> {
+                Toast.makeText(requireContext(), "home", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun renderData(it: AppStatePictureOfTheDay?) {
@@ -54,8 +76,8 @@ class MainFragment : Fragment() {
             is AppStatePictureOfTheDay.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.customImageView.load(it.pictureData.url)
-                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
-                binding.included.bottomSheetDescription.text = it.pictureData.explanation
+//                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
+//                binding.included.bottomSheetDescription.text = it.pictureData.explanation
             }
         }
     }
