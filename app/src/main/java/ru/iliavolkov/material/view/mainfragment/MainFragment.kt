@@ -11,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
 import viewmodel.PictureOfTheDayViewModel
@@ -52,6 +54,8 @@ class MainFragment : Fragment() {
             is AppStatePictureOfTheDay.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.customImageView.load(it.pictureData.url)
+                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
+                binding.included.bottomSheetDescription.text = it.pictureData.explanation
             }
         }
     }
