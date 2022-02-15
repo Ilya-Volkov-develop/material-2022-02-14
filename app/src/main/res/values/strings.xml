@@ -8,4 +8,6 @@
     <string name="search">Search</string>
     <string name="errorOnServer">Server error, please try again later</string>
     <string name="codeError">Error code</string>
+    <string name="error">Error</string>
+    <string name="exit">Exit</string>
 </resources>

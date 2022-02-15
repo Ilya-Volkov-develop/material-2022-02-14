@@ -2,6 +2,8 @@ package ru.iliavolkov.material.view.mainfragment
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +34,11 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getPictureOfTheDay()
+        binding.inputLayout.setStartIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data  = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+            })
+        }
     }
 
     private fun renderData(it: AppStatePictureOfTheDay?) {
@@ -46,7 +53,6 @@ class MainFragment : Fragment() {
                 binding.loadingLayout.visibility = View.GONE
                 binding.customImageView.load(it.pictureData.url)
             }
-            null -> TODO()
         }
     }
 
