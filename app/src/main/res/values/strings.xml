@@ -6,4 +6,6 @@
     <string name="favourite">favourite</string>
     <string name="settings">settings</string>
     <string name="search">Search</string>
+    <string name="errorOnServer">Server error, please try again later</string>
+    <string name="codeError">Error code</string>
 </resources>
