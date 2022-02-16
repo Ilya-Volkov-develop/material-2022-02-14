@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/search_wiki"
             app:counterEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_search_24"
+            app:startIconDrawable="@drawable/ic_search"
             app:counterMaxLength="10"
             app:endIconMode="clear_text"
             app:helperText="@string/wiki_helper_text"
@@ -61,7 +61,8 @@
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomAppBar"
         app:srcCompat="@drawable/ic_plus_fab"
-        app:tint="#FFFFFF" />
+        app:tint="#FFFFFF"
+        android:contentDescription="@string/fab" />
     <FrameLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"

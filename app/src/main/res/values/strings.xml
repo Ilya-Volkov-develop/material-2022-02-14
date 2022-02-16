@@ -10,4 +10,5 @@
     <string name="codeError">Error code</string>
     <string name="error">Error</string>
     <string name="exit">Exit</string>
+    <string name="fab">FAB</string>
 </resources>
