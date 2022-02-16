@@ -17,6 +17,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
 import ru.iliavolkov.material.view.MainActivity
+import ru.iliavolkov.material.view.chips.ChipsFragment
 import ru.iliavolkov.material.view.navigationDrawerFragment.BottomNavigationDrawerFragment
 import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
@@ -81,10 +82,10 @@ class MainFragment : Fragment() {
                 Toast.makeText(requireContext(), "app_bar_fav", Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
-                Toast.makeText(requireContext(), "app_bar_settings", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, ChipsFragment.newInstance(),"ChipsFragment").addToBackStack("").commit()
             }
             android.R.id.home -> {
-                BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager,"ff")
+                BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager,"BottomNavigationDrawerFragment")
             }
         }
         return super.onOptionsItemSelected(item)
