@@ -1,9 +1,8 @@
 package ru.iliavolkov.material.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ru.iliavolkov.material.R
-import ru.iliavolkov.material.databinding.ActivityMainBinding
 import ru.iliavolkov.material.view.mainfragment.MainFragment
 
 class MainActivity : AppCompatActivity() {

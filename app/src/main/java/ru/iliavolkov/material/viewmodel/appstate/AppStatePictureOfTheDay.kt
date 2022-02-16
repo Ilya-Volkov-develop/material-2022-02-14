@@ -1,4 +1,4 @@
-package viewmodel.appstate
+package ru.iliavolkov.material.viewmodel.appstate
 
 import ru.iliavolkov.material.model.PictureOfTheDayDTO
 

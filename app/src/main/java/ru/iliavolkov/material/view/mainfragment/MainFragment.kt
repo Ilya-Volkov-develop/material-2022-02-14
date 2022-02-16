@@ -6,19 +6,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
 import ru.iliavolkov.material.view.MainActivity
-import viewmodel.PictureOfTheDayViewModel
-import viewmodel.appstate.AppStatePictureOfTheDay
+import ru.iliavolkov.material.view.navigationDrawerFragment.BottomNavigationDrawerFragment
+import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
+import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
 
 class MainFragment : Fragment() {
 
@@ -59,7 +58,7 @@ class MainFragment : Fragment() {
                 Toast.makeText(requireContext(), "app_bar_settings", Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> {
-                Toast.makeText(requireContext(), "home", Toast.LENGTH_SHORT).show()
+                BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager,"ff")
             }
         }
         return super.onOptionsItemSelected(item)

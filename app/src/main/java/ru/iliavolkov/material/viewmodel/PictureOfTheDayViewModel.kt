@@ -1,4 +1,4 @@
-package viewmodel
+package ru.iliavolkov.material.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import retrofit2.Response
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.model.PictureOfTheDayDTO
 import ru.iliavolkov.material.repository.RepositoryPictureOfTheDayImpl
-import viewmodel.appstate.AppStatePictureOfTheDay
+import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
 
 class PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppStatePictureOfTheDay> = MutableLiveData()): ViewModel() {
 
