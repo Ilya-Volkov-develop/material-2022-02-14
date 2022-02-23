@@ -11,4 +11,7 @@
     <string name="error">Error</string>
     <string name="exit">Exit</string>
     <string name="fab">FAB</string>
+    <string name="before_yesterday">Позавчера</string>
+    <string name="yesterday">Вчера</string>
+    <string name="today">Сегодня</string>
 </resources>

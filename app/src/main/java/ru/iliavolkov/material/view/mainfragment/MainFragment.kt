@@ -14,10 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.tabs.TabLayout
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
 import ru.iliavolkov.material.view.MainActivity
-import ru.iliavolkov.material.view.chips.ChipsFragment
+import ru.iliavolkov.material.view.chips.SettingFragment
 import ru.iliavolkov.material.view.navigationDrawerFragment.BottomNavigationDrawerFragment
 import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
@@ -41,6 +42,13 @@ class MainFragment : Fragment() {
         viewModel.getPictureOfTheDay()
         clickInputLayout()
         clickFAB()
+        binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab!!.position){}
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
 
         (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
         setHasOptionsMenu(true)
@@ -57,15 +65,12 @@ class MainFragment : Fragment() {
     private fun clickFAB() {
         binding.fab.setOnClickListener{
             if(isMain){
-//                binding.bottomAppBar.navigationIcon = null
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
                 binding.fab.setImageResource(R.drawable.ic_back_fab)
-//                binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar_other_screen)
             }else{
                 binding.bottomAppBar.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.ic_hamburger_menu_bottom_bar)
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
                 binding.fab.setImageResource(R.drawable.ic_plus_fab)
-                binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)
             }
             isMain = !isMain
         }
@@ -82,7 +87,7 @@ class MainFragment : Fragment() {
                 Toast.makeText(requireContext(), "app_bar_fav", Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
-                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, ChipsFragment.newInstance(),"ChipsFragment").addToBackStack("").commit()
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, SettingFragment.newInstance(),"ChipsFragment").addToBackStack("").commit()
             }
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(requireActivity().supportFragmentManager,"BottomNavigationDrawerFragment")

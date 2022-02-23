@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="superColor" format="color"/>
+    <attr name="iconColor" format="color"/>
+    <attr name="textInputColor" format="color"/>
+</resources>
