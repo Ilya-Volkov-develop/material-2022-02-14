@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.mainfragment.MainFragment">
+    tools:context=".view.main.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,19 +45,17 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/before_yesterday" />
+                android:text="@string/today"/>
 
             <com.google.android.material.tabs.TabItem
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yesterday" />
 
             <com.google.android.material.tabs.TabItem
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/today" />
+                android:text="@string/before_yesterday" />
         </com.google.android.material.tabs.TabLayout>
 
         <ru.iliavolkov.material.utils.CustomImageView
@@ -68,11 +66,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/loadingLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/customImageView"
+            app:layout_constraintEnd_toEndOf="@+id/customImageView"
+            app:layout_constraintStart_toStartOf="@+id/customImageView"
+            app:layout_constraintTop_toBottomOf="@+id/tabs">
 
-    <include
-        android:id="@+id/included"
-        layout="@layout/bottom_sheet_layout"/>
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -89,18 +102,10 @@
         app:layout_anchor="@id/bottomAppBar"
         app:srcCompat="@drawable/ic_plus_fab"
         android:contentDescription="@string/fab" />
-    <FrameLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clickable="true"
-        android:visibility="gone">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
+    <include
+        android:id="@+id/included"
+        layout="@layout/bottom_sheet_layout"/>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,31 +9,34 @@
         android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal"
         app:singleLine="true"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chipDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="День" />
         <com.google.android.material.chip.Chip
+            android:id="@+id/chipNight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="Ночь" />
         <com.google.android.material.chip.Chip
+            android:id="@+id/chipMars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="Марс" />
         <com.google.android.material.chip.Chip
+            android:id="@+id/chipMoon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="Луна" />
     </com.google.android.material.chip.ChipGroup>
 </LinearLayout>

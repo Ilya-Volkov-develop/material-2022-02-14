@@ -1,31 +1,37 @@
-package ru.iliavolkov.material.view.mainfragment
+package ru.iliavolkov.material.view.main
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
 import ru.iliavolkov.material.view.MainActivity
-import ru.iliavolkov.material.view.chips.SettingFragment
+import ru.iliavolkov.material.view.setting.SettingFragment
 import ru.iliavolkov.material.view.navigationDrawerFragment.BottomNavigationDrawerFragment
 import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainFragment : Fragment() {
 
-    private var isMain = true
+    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
+
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
 
@@ -38,20 +44,49 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        behavior = BottomSheetBehavior.from(binding.included.bottomSheetContainer)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        viewModel.getPictureOfTheDay()
+        viewModel.getPictureOfTheDay("")
         clickInputLayout()
         clickFAB()
+        tabLayoutInit()
+
+        behavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {}
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                if (slideOffset == 0.0f) {
+                    binding.fab.visibility = View.VISIBLE
+                    binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+                    binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+                }
+            }
+        })
+
+
+        (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
+        setHasOptionsMenu(true)
+    }
+
+    private fun tabLayoutInit() {
         binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab!!.position){}
+                when(tab!!.position){
+                    0->{viewModel.getPictureOfTheDay(takeDate(-1))}
+                }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+    }
 
-        (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
-        setHasOptionsMenu(true)
+    private fun takeDate(count: Int): String {
+        val currentDate = Calendar.getInstance()
+        currentDate.add(Calendar.DAY_OF_MONTH, count)
+        val format1 = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        format1.timeZone = TimeZone.getTimeZone("EST")
+        return format1.format(currentDate.time)
     }
 
     private fun clickInputLayout() {
@@ -61,18 +96,10 @@ class MainFragment : Fragment() {
             })
         }
     }
-
     private fun clickFAB() {
         binding.fab.setOnClickListener{
-            if(isMain){
-                binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.fab.setImageResource(R.drawable.ic_back_fab)
-            }else{
-                binding.bottomAppBar.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.ic_hamburger_menu_bottom_bar)
-                binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.fab.setImageResource(R.drawable.ic_plus_fab)
-            }
-            isMain = !isMain
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            binding.fab.visibility = View.INVISIBLE
         }
     }
 
@@ -107,8 +134,8 @@ class MainFragment : Fragment() {
             is AppStatePictureOfTheDay.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.customImageView.load(it.pictureData.url)
-//                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
-//                binding.included.bottomSheetDescription.text = it.pictureData.explanation
+                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
+                binding.included.bottomSheetDescription.text = it.pictureData.explanation
             }
         }
     }

@@ -4,7 +4,7 @@
     <style name="MyThemeDay" parent="Theme.Material">
         <item name="superColor">@color/gray</item>
         <item name="iconColor">@color/white</item>
-        <item name="textInputColor">@color/gray</item>
+        <item name="textInputColor">@color/white</item>
     </style>
 
     <style name="MyThemeNight" parent="Theme.Material">
