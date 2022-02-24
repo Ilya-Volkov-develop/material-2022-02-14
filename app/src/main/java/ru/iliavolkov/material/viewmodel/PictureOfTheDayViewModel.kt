@@ -18,9 +18,9 @@ class PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppStatePic
 
     fun getLiveData() = liveData
 
-    fun getPictureOfTheDay(){
+    fun getPictureOfTheDay(date:String){
         liveData.postValue(AppStatePictureOfTheDay.Loading(0))
-        repositoryPictureOfTheDayImpl.getPictureOfTheDay(callbackPictureOfTheDay)
+        repositoryPictureOfTheDayImpl.getPictureOfTheDay(date,callbackPictureOfTheDay)
     }
 
     private val callbackPictureOfTheDay = object : Callback<PictureOfTheDayDTO> {

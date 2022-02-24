@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         behavior = BottomSheetBehavior.from(binding.included.bottomSheetContainer)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        viewModel.getPictureOfTheDay("")
+        viewModel.getPictureOfTheDay(takeDate(0))
         clickInputLayout()
         clickFAB()
         tabLayoutInit()
@@ -73,7 +73,9 @@ class MainFragment : Fragment() {
         binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab!!.position){
-                    0->{viewModel.getPictureOfTheDay(takeDate(-1))}
+                    0->{viewModel.getPictureOfTheDay(takeDate(0))}
+                    1->{viewModel.getPictureOfTheDay(takeDate(-1))}
+                    2->{viewModel.getPictureOfTheDay(takeDate(-2))}
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}

@@ -5,5 +5,5 @@ import ru.iliavolkov.material.model.PictureOfTheDayDTO
 
 interface RepositoryPictureOfTheDay {
 
-    fun getPictureOfTheDay(callBack: Callback<PictureOfTheDayDTO>)
+    fun getPictureOfTheDay(date:String,callBack: Callback<PictureOfTheDayDTO>)
 }

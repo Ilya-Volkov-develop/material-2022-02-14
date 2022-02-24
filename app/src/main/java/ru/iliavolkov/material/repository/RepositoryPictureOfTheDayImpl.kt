@@ -7,8 +7,8 @@ import ru.iliavolkov.material.model.PictureOfTheDayDTO
 
 class RepositoryPictureOfTheDayImpl:RepositoryPictureOfTheDay {
 
-    override fun getPictureOfTheDay(callBack: Callback<PictureOfTheDayDTO>) {
-        retrofit.getPictureOfTheDay(BuildConfig.NASA_API_KEY).enqueue(callBack)
+    override fun getPictureOfTheDay(date:String,callBack: Callback<PictureOfTheDayDTO>) {
+        retrofit.getPictureOfTheDay(date,BuildConfig.NASA_API_KEY).enqueue(callBack)
     }
 
 }
