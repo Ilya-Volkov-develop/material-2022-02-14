@@ -29,16 +29,13 @@ class SettingFragment : Fragment() {
     private fun initChip() {
         when(requireActivity().getPreferences(Activity.MODE_PRIVATE).getString("settingTheme","")){
             "chipDay"->{
-                binding.chipDay.isCheckable = true
-            }
-            "chipNight"->{
-                binding.chipNight.isCheckable = true
+                binding.chipDay.isChecked = true
             }
             "chipMars"->{
-                binding.chipMars.isCheckable = true
+                binding.chipMars.isChecked = true
             }
             "chipMoon"->{
-                binding.chipMoon.isCheckable = true
+                binding.chipMoon.isChecked = true
             }
         }
     }
@@ -49,27 +46,18 @@ class SettingFragment : Fragment() {
                 R.id.chipDay->{
                     requireActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString("settingTheme","chipDay").apply()
                     requireActivity().setTheme(R.style.MyThemeDay)
-//                    recreate(requireActivity())
-                }
-                R.id.chipNight->{
-                    requireActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString("settingTheme","chipNight").apply()
-                    requireActivity().setTheme(R.style.MyThemeNight)
-//                    recreate(requireActivity())
                 }
                 R.id.chipMars->{
                     requireActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString("settingTheme","chipMars").apply()
                     requireActivity().setTheme(R.style.MyThemeMars)
-//                    recreate(requireActivity())
                 }
                 R.id.chipMoon->{
                     requireActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString("settingTheme","chipMoon").apply()
                     requireActivity().setTheme(R.style.MyThemeMoon)
-//                    recreate(requireActivity())
                 }
             }
         }
     }
-
 
     companion object {
         @JvmStatic

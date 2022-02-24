@@ -19,24 +19,18 @@
             android:layout_height="wrap_content"
             android:checked="true"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:text="День" />
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipNight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:text="Ночь" />
+            android:text="@string/day" />
         <com.google.android.material.chip.Chip
             android:id="@+id/chipMars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:text="Марс" />
+            android:text="@string/mars" />
         <com.google.android.material.chip.Chip
             android:id="@+id/chipMoon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:text="Луна" />
+            android:text="@string/moon" />
     </com.google.android.material.chip.ChipGroup>
 </LinearLayout>

@@ -15,9 +15,6 @@ class MainActivity : AppCompatActivity() {
             "chipDay"->{
                 setTheme(R.style.MyThemeDay)
             }
-            "chipNight"->{
-                setTheme(R.style.MyThemeNight)
-            }
             "chipMars"->{
                 setTheme(R.style.MyThemeMars)
             }

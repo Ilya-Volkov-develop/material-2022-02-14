@@ -14,4 +14,7 @@
     <string name="before_yesterday">Позавчера</string>
     <string name="yesterday">Вчера</string>
     <string name="today">Сегодня</string>
+    <string name="day">День</string>
+    <string name="mars">Марс</string>
+    <string name="moon">Луна</string>
 </resources>
