@@ -1,5 +1,6 @@
 package ru.iliavolkov.material.view.main.asteroid
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidRecyclerViewItemBinding
 import ru.iliavolkov.material.model.NearEarthObject
 
-class AsteroidRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerView.Adapter<AsteroidRecyclerViewAdapter.ViewHolder>() {
+class AsteroidRecyclerViewAdapter: RecyclerView.Adapter<AsteroidRecyclerViewAdapter.ViewHolder>() {
 
     private var asteroidData:List<NearEarthObject> = listOf()
 
@@ -30,10 +31,14 @@ class AsteroidRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerVi
     }
 
     inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
+        @SuppressLint("SetTextI18n")
         fun bind(nearEarthObject: NearEarthObject){
             FragmentAsteroidRecyclerViewItemBinding.bind(itemView).run{
                 asteroidName.text = nearEarthObject.name
-                root.setOnClickListener{ listener.onItemClick(nearEarthObject) }
+                date.text = "Дата приближения: ${nearEarthObject.closeApproachData[0].closeApproachDateFull}"
+                radius.text = "Радиус: max = ${nearEarthObject.estimatedDiameter.kilometers.estimatedDiameterMax} км\nmin = ${nearEarthObject.estimatedDiameter.kilometers.estimatedDiameterMin} км"
+                speed.text = "Скорость: ${nearEarthObject.closeApproachData[0].relativeVelocity.kilometersPerHour} км/час"
+                orbitalBody.text = "Орбитальное тело ${nearEarthObject.closeApproachData[0].orbitingBody}"
             }
         }
     }

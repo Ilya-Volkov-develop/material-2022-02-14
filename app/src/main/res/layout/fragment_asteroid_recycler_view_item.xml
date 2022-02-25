@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    app:layoutDescription="@xml/fragment_asteroid_recycler_view_item_scene2">
+    android:background="@drawable/frame_asteroid_item"
+    app:layoutDescription="@xml/fragment_asteroid_recycler_view_item_scene">
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -15,7 +16,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/ic_asteroid_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +26,7 @@
         android:id="@+id/appCompatTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Имя астеройда"
+        android:text="@string/name_asteroid"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/asteroidName"
         app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
@@ -34,14 +37,15 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="20sp"
-        tools:text = "Bvz"
         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2" />
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+        tools:text="Bvz" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/plus"
         android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,39 +56,42 @@
         android:id="@+id/attrContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/appCompatImageView2"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView2">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/radius"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Радиус 0.235806068 км"
-            android:textColor="@color/black" />
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Дата приближения: 2022-Feb-27 18:55"
             android:textColor="@color/black"
-            android:layout_marginTop="10dp"/>
+            tools:text="Дата приближения: 2022-Feb-27 18:55" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/radius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            tools:text="Радиус 0.235806068 км" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Скорость: 68028.5970530863 км/час"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:layout_marginTop="10dp"/>
+            tools:text="Скорость: 68028.5970530863 км/час" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/orbitalBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Орбитальное тело: Земля"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:layout_marginTop="10dp"/>
+            tools:text="Орбитальное тело: Земля" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

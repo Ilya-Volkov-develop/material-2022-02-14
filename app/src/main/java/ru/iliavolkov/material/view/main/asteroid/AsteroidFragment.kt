@@ -17,13 +17,13 @@ import ru.iliavolkov.material.viewmodel.AsteroidViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAsteroid
 
 
-class AsteroidFragment : Fragment(),OnItemClickListener {
+class AsteroidFragment : Fragment() {
 
 
     private var _binding: FragmentAsteroidBinding? = null
     private val binding: FragmentAsteroidBinding get() = _binding!!
     private val viewModel: AsteroidViewModel by lazy { ViewModelProvider(this).get(AsteroidViewModel::class.java) }
-    private val adapter:AsteroidRecyclerViewAdapter by lazy { AsteroidRecyclerViewAdapter(this) }
+    private val adapter:AsteroidRecyclerViewAdapter by lazy { AsteroidRecyclerViewAdapter() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAsteroidBinding.inflate(inflater, container, false)
@@ -91,9 +91,5 @@ class AsteroidFragment : Fragment(),OnItemClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun onItemClick(nearEarthObject: NearEarthObject) {
-
     }
 }

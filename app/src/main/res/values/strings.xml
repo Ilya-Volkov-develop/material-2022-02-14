@@ -18,4 +18,5 @@
     <string name="moon">Луна</string>
     <string name="home">Home</string>
     <string name="weather">Weather</string>
+    <string name="name_asteroid">Имя астеройда</string>
 </resources>
