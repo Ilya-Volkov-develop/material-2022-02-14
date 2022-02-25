@@ -8,9 +8,9 @@
             android:icon="@drawable/ic_home_menu"
             app:showAsAction="always"/>
         <item
-            android:id="@+id/navigation_favourite"
-            android:title="@string/favourite"
-            android:icon="@drawable/ic_favourite_menu"
+            android:id="@+id/navigation_asteroid"
+            android:title="@string/asteroid"
+            android:icon="@drawable/ic_asteroid_menu"
             app:showAsAction="always" />
 
         <item

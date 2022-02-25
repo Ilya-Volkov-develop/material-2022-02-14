@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentMainBinding
+import ru.iliavolkov.material.viewmodel.AsteroidViewModel
 
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
+    private val viewModel: AsteroidViewModel by lazy { ViewModelProvider(this).get(AsteroidViewModel::class.java) }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -34,7 +37,7 @@ class MainFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
-                    1 -> binding.bottomNavigationView.menu.findItem(R.id.navigation_favourite).isChecked = true
+                    1 -> binding.bottomNavigationView.menu.findItem(R.id.navigation_asteroid).isChecked = true
                     2 -> binding.bottomNavigationView.menu.findItem(R.id.navigation_weather).isChecked = true
                     3 -> binding.bottomNavigationView.menu.findItem(R.id.navigation_settings).isChecked = true
                 }
@@ -48,7 +51,7 @@ class MainFragment : Fragment() {
                     binding.viewPager.currentItem = 0
                     true
                 }
-                R.id.navigation_favourite -> {
+                R.id.navigation_asteroid -> {
                     binding.viewPager.currentItem = 1
                     true
                 }
@@ -63,23 +66,6 @@ class MainFragment : Fragment() {
                 else -> true
             }
         }
-//        binding.bottomNavigationView.setOnItemSelectedListener {
-//            when(it.itemId){
-//                R.id.navigation_home -> {
-//                    true
-//                }
-//                R.id.navigation_favourite -> {
-//                    true
-//                }
-//                R.id.navigation_weather -> {
-//                    true
-//                }
-//                R.id.navigation_settings -> {
-//                    true
-//                }
-//                else -> true
-//            }
-//        }
     }
 
 

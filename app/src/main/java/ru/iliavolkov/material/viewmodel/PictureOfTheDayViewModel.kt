@@ -7,20 +7,20 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.model.PictureOfTheDayDTO
-import ru.iliavolkov.material.repository.RepositoryPictureOfTheDayImpl
+import ru.iliavolkov.material.repository.RepositoryImpl
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
 
 class PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppStatePictureOfTheDay> = MutableLiveData()): ViewModel() {
 
-    private val repositoryPictureOfTheDayImpl: RepositoryPictureOfTheDayImpl by lazy {
-        RepositoryPictureOfTheDayImpl()
+    private val repositoryImpl: RepositoryImpl by lazy {
+        RepositoryImpl()
     }
 
     fun getLiveData() = liveData
 
     fun getPictureOfTheDay(date:String){
         liveData.postValue(AppStatePictureOfTheDay.Loading(0))
-        repositoryPictureOfTheDayImpl.getPictureOfTheDay(date,callbackPictureOfTheDay)
+        repositoryImpl.getPictureOfTheDay(date,callbackPictureOfTheDay)
     }
 
     private val callbackPictureOfTheDay = object : Callback<PictureOfTheDayDTO> {
