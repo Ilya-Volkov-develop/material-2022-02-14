@@ -1,5 +1,7 @@
 package ru.iliavolkov.material.view.main.home
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -18,11 +20,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentHomeBinding
-import ru.iliavolkov.material.databinding.FragmentMainBinding
 import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HomeFragment : Fragment() {
 
@@ -51,22 +53,57 @@ class HomeFragment : Fragment() {
     private fun bottomSheet() {
         behavior.addBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {}
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED ->{
+                        animationBackground("out")
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED ->{
+                        animationBackground("in")
+                    }
+                }
             }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
     }
 
+    private fun animationBackground(state:String) {
+        var colorFrom:Int? = null
+        var colorTo:Int? = null
+        when(state){
+            "in"->{
+                colorFrom = resources.getColor(R.color.transparent)
+                colorTo = resources.getColor(R.color.behavior_background)
+            }
+            "out"->{
+                colorFrom = resources.getColor(R.color.behavior_background)
+                colorTo = resources.getColor(R.color.transparent)
+            }
+        }
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+        colorAnimation.duration = 250
+        colorAnimation.addUpdateListener { animator ->
+            binding.homeContainer.setBackgroundColor(animator.animatedValue as Int)
+        }
+        colorAnimation.start()
+    }
+
     private fun tabLayoutInit() {
-        binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab!!.position){
-                    0->{viewModel.getPictureOfTheDay(takeDate(0))}
-                    1->{viewModel.getPictureOfTheDay(takeDate(-1))}
-                    2->{viewModel.getPictureOfTheDay(takeDate(-2))}
+                when (tab!!.position) {
+                    0 -> {
+                        viewModel.getPictureOfTheDay(takeDate(0))
+                    }
+                    1 -> {
+                        viewModel.getPictureOfTheDay(takeDate(-1))
+                    }
+                    2 -> {
+                        viewModel.getPictureOfTheDay(takeDate(-2))
+                    }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
@@ -83,7 +120,7 @@ class HomeFragment : Fragment() {
     private fun clickInputLayout() {
         binding.inputLayout.setStartIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data  = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
             })
         }
     }
@@ -91,7 +128,7 @@ class HomeFragment : Fragment() {
     private fun renderData(it: AppStatePictureOfTheDay?) {
         when(it){
             is AppStatePictureOfTheDay.Error -> {
-                loadingFailed(it.error,it.code)
+                loadingFailed(it.error, it.code)
             }
             is AppStatePictureOfTheDay.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
