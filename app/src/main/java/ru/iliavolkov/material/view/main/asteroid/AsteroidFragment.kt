@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidBinding
-import ru.iliavolkov.material.model.AsteroidDTO
 import ru.iliavolkov.material.model.NearEarthObject
 import ru.iliavolkov.material.viewmodel.AsteroidViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAsteroid

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidRecyclerViewItemBinding
-import ru.iliavolkov.material.model.AsteroidDTO
 import ru.iliavolkov.material.model.NearEarthObject
 
 class AsteroidRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerView.Adapter<AsteroidRecyclerViewAdapter.ViewHolder>() {
@@ -36,12 +35,6 @@ class AsteroidRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerVi
                 asteroidName.text = nearEarthObject.name
                 root.setOnClickListener{ listener.onItemClick(nearEarthObject) }
             }
-//            FragmentMainRecyclerCityItemBinding.bind(itemView).run {
-//                mainFragmentRecyclerItemTextView.text = city.nameCity
-//                root.setOnClickListener{ listener.onItemClick(city,position) }
-//            }
-
-
         }
     }
 }
