@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/frame_bottom_sheet"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="0dp"
+    app:behavior_peekHeight="48dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View
