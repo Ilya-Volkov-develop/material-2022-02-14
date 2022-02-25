@@ -88,8 +88,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container, SettingFragment.newInstance(),"ChipsFragment").addToBackStack("").commit()
-
     private fun renderData(it: AppStatePictureOfTheDay?) {
         when(it){
             is AppStatePictureOfTheDay.Error -> {

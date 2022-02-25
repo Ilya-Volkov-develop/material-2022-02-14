@@ -7,8 +7,7 @@
         <item name="colorOnPrimary">?superColor</item>
 
         <item name="textInputStyle">@style/myTextInputLayoutStyle</item>
-        <item name="bottomAppBarStyle">@style/myBottomAppBarStyle</item>
-        <item name="floatingActionButtonStyle">@style/myFABStyle</item>
+        <item name="bottomNavigationStyle">@style/myBottomNavigationView</item>
         <item name="tabStyle">@style/myTabStyle</item>
         <item name="textAppearanceHeadline1">@style/MyTextAppearanceHeadline1</item>
         <!-- Status bar color. -->

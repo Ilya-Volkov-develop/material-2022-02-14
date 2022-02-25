@@ -27,14 +27,10 @@
         <item name="color">@color/mars_color</item>
     </style>
 
-    <style name="myBottomAppBarStyle" parent="Widget.MaterialComponents.BottomAppBar.Colored">
+    <style name="myBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="backgroundTint">@color/gray</item>
-        <item name="navigationIconTint">@color/white</item>
-    </style>
-
-    <style name="myFABStyle" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/gray</item>
-        <item name="tint">@color/white</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
     </style>
 
     <style name="myTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
