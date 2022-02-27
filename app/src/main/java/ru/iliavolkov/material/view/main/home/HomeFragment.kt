@@ -12,12 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentHomeBinding
 import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
@@ -45,9 +48,23 @@ class HomeFragment : Fragment() {
         behavior = BottomSheetBehavior.from(binding.included.bottomSheetContainer)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getPictureOfTheDay(takeDate(0))
+        binding.youTubePlayer.getPlayerUiController().showFullscreenButton(true)
         clickInputLayout()
         tabLayoutInit()
         bottomSheet()
+    }
+
+    private fun youTubePlay(path:String) {
+        binding.youTubePlayer.addYouTubePlayerListener(object :AbstractYouTubePlayerListener(){
+            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(path, 0f)
+            }
+        })
+        //FullScreen но мне не понравилось что видео можно открыть на полный экран
+        //        binding.youTubePlayer.getPlayerUiController().setFullScreenButtonClickListener{
+        //            if (binding.youTubePlayer.isFullScreen()) binding.youTubePlayer.exitFullScreen()
+        //            else binding.youTubePlayer.enterFullScreen()
+        //        }
     }
 
     private fun bottomSheet() {
@@ -134,10 +151,19 @@ class HomeFragment : Fragment() {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
             is AppStatePictureOfTheDay.Success -> {
-                binding.loadingLayout.visibility = View.GONE
-                binding.customImageView.load(it.pictureData.url)
-                binding.included.bottomSheetDescriptionHeader.text = it.pictureData.title
-                binding.included.bottomSheetDescription.text = it.pictureData.explanation
+                with(binding) {
+                    loadingLayout.visibility = View.GONE
+                    if (it.pictureData.mediaType == "image") {
+                        included.root.visibility = View.VISIBLE
+                        customImageView.load(it.pictureData.url)
+                        included.bottomSheetDescriptionHeader.text = it.pictureData.title
+                        included.bottomSheetDescription.text = it.pictureData.explanation
+                    } else {
+                        youTubePlayer.visibility = View.VISIBLE
+                        included.root.visibility = View.GONE
+                        youTubePlay(it.pictureData.url.replace("https://www.youtube.com/ember/", "").replace("?rel=0", ""))
+                    }
+                }
             }
         }
     }

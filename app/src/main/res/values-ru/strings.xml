@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_wiki">Найти в Википедии</string>
+    <string name="wiki_helper_text">Поищите термин в википедии</string>
+    <string name="search">Поиск</string>
+    <string name="errorOnServer">Ошибка сервера, повторите попытку позже</string>
+    <string name="codeError">Код ошибки</string>
+    <string name="error">Ошибка</string>
+    <string name="reboot">Перезагрузить</string>
+    <string name="before_yesterday">Позавчера</string>
+    <string name="yesterday">Вчера</string>
+    <string name="today">Сегодня</string>
+    <string name="day">День</string>
+    <string name="mars">Марс</string>
+    <string name="moon">Луна</string>
+    <string name="home">Главная</string>
+    <string name="asteroid">Астеройды</string>
+    <string name="weather">Погода</string>
+    <string name="settings">Настройки</string>
+    <string name="name_asteroid">Название астеройда</string>
+</resources>

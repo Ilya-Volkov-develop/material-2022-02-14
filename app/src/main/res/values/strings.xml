@@ -1,22 +1,22 @@
 <resources>
-    <string name="app_name">Material</string>
-    <string name="photo_of_the_day_stub">Photo of the day</string>
-    <string name="search_wiki">Найти в Википедии</string>
-    <string name="wiki_helper_text">Поищите термин в википедии</string>
+    <string name="app_name" translatable="false">Nasa</string>
+    <string name="photo_of_the_day_stub" translatable="false">Photo of the day</string>
+    <string name="search_wiki">Find on Wikipedia</string>
+    <string name="wiki_helper_text">Look up the term on wikipedia</string>
     <string name="asteroid">Asteroid</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="errorOnServer">Server error, please try again later</string>
     <string name="codeError">Error code</string>
     <string name="error">Error</string>
-    <string name="exit">Exit</string>
+    <string name="reboot">Reload</string>
     <string name="before_yesterday">Позавчера</string>
     <string name="yesterday">Вчера</string>
     <string name="today">Сегодня</string>
-    <string name="day">День</string>
-    <string name="mars">Марс</string>
-    <string name="moon">Луна</string>
+    <string name="day">Day</string>
+    <string name="mars">Mars</string>
+    <string name="moon">Moon</string>
     <string name="home">Home</string>
     <string name="weather">Weather</string>
-    <string name="name_asteroid">Имя астеройда</string>
+    <string name="name_asteroid">Name of the asteroid</string>
 </resources>
