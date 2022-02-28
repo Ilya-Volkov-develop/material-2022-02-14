@@ -6,6 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dateEarth"
         android:layout_width="wrap_content"
@@ -23,11 +30,11 @@
         android:id="@+id/calendarEarth"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/date"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:src="@drawable/date"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/dateEarth"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
 
     <androidx.recyclerview.widget.RecyclerView
