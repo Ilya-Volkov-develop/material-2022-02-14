@@ -19,4 +19,5 @@
     <string name="home">Home</string>
     <string name="weather">Weather</string>
     <string name="name_asteroid">Name of the asteroid</string>
+    <string name="select_date">Select a date</string>
 </resources>

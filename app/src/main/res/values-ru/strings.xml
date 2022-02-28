@@ -18,4 +18,5 @@
     <string name="weather">Погода</string>
     <string name="settings">Настройки</string>
     <string name="name_asteroid">Название астеройда</string>
+    <string name="select_date">Выберите дату</string>
 </resources>

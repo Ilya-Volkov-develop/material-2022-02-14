@@ -18,10 +18,10 @@ class AsteroidViewModel(private val liveData: MutableLiveData<AppStateAsteroid> 
 
     fun getAsteroids(){
         liveData.postValue(AppStateAsteroid.Loading(0))
-        repositoryImpl.getAsteroids(callbackPictureOfTheDay)
+        repositoryImpl.getAsteroids(callbackAsteroids)
     }
 
-    private val callbackPictureOfTheDay = object : Callback<AsteroidDTO> {
+    private val callbackAsteroids = object : Callback<AsteroidDTO> {
         override fun onFailure(call: Call<AsteroidDTO>, t: Throwable) {
             liveData.postValue(AppStateAsteroid.Error(R.string.errorOnServer,0))
         }

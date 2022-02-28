@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dateEarth"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/select_date"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendarEarth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/calendarEarth" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/calendarEarth"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/date"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toEndOf="@+id/dateEarth"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageEarth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/dateEarth"/>
+
+
+
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

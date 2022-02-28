@@ -6,7 +6,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.iliavolkov.material.repository.NasaAPIRequest
-import ru.iliavolkov.material.utils.BASE_URL
+import ru.iliavolkov.material.utils.BASE_URL_CALENDAR
+import ru.iliavolkov.material.utils.BASE_URL_NASA
 
 class App:Application() {
     override fun onCreate() {
@@ -16,12 +17,19 @@ class App:Application() {
 
     companion object{
         private var appInstance: App? = null
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
+        val retrofitMain = Retrofit.Builder().baseUrl(BASE_URL_NASA)
             .client(OkHttpClient())
             .addConverterFactory(
                 GsonConverterFactory.create(
                     GsonBuilder().setLenient().create()
                 ))
             .build().create(NasaAPIRequest::class.java)!!
+        val retrofitEarth = Retrofit.Builder().baseUrl(BASE_URL_CALENDAR)
+                .client(OkHttpClient())
+                .addConverterFactory(
+                        GsonConverterFactory.create(
+                                GsonBuilder().setLenient().create()
+                        ))
+                .build().create(NasaAPIRequest::class.java)!!
     }
 }

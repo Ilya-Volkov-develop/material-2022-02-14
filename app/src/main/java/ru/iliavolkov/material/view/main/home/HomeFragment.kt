@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -78,6 +79,10 @@ class HomeFragment : Fragment() {
                     BottomSheetBehavior.STATE_EXPANDED ->{
                         animationBackground("in")
                     }
+                    BottomSheetBehavior.STATE_DRAGGING -> {}
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {}
+                    BottomSheetBehavior.STATE_HIDDEN -> {}
+                    BottomSheetBehavior.STATE_SETTLING -> {}
                 }
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}

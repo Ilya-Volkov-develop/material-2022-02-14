@@ -34,9 +34,8 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputLayout">
 
@@ -58,15 +57,15 @@
 
             </com.google.android.material.tabs.TabLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/appCompatImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:src="@drawable/date"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tabs"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputLayout" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/appCompatImageView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:src="@drawable/date"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/tabs"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/inputLayout" />-->
 
             <ru.iliavolkov.material.utils.CustomImageView
                 android:id="@+id/customImageView"
