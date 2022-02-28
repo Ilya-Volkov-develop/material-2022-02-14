@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentEarthBinding
 import ru.iliavolkov.material.model.DateDTO
+import ru.iliavolkov.material.view.main.asteroid.AsteroidRecyclerViewAdapter
 import ru.iliavolkov.material.viewmodel.EarthViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAllDate
 import ru.iliavolkov.material.viewmodel.appstate.AppStateEarthImages
@@ -23,9 +24,12 @@ class EarthFragment : Fragment() {
 
     private var _binding: FragmentEarthBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: EarthViewModel by lazy { ViewModelProvider(this).get(EarthViewModel::class.java) }
+    private val adapter: EarthRecyclerViewAdapter by lazy { EarthRecyclerViewAdapter() }
     var minDate:Long? = null
     var maxDate:Long? = null
+    val data = mutableListOf("","","")
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -37,6 +41,7 @@ class EarthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getAllDate()
+        binding.earthRecycler.adapter = adapter
         clickCalendar()
     }
 
@@ -60,6 +65,7 @@ class EarthFragment : Fragment() {
             }
             is AppStateEarthImages.Success -> {
                 binding.loadingLayout.visibility = View.GONE
+                adapter.setEarthData(it.listEarthImages,data)
             }
         }
     }
@@ -70,6 +76,7 @@ class EarthFragment : Fragment() {
         minDate = SimpleDateFormat("yyyy-MM-dd").parse(date[date.size-1].date).time
     }
 
+    @SuppressLint("SetTextI18n")
     private fun clickCalendar() {
         binding.calendarEarth.setOnClickListener {
             val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
@@ -81,6 +88,10 @@ class EarthFragment : Fragment() {
             calendar.minDate = minDate!!
             dialog.show()
             calendar.setOnDateChangeListener { _, year, month, day ->
+                data[0] = convertData(year)
+                data[1] = convertData(month+1)
+                data[2] = convertData(day)
+                binding.dateEarth.text = "Дата: ${convertData(day)}.${convertData(month+1)}.${convertData(year)}"
                 viewModel.getImageOnDate(convertData(day),convertData(month+1),convertData(year))
                 dialog.dismiss()
             }
