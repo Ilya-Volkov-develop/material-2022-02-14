@@ -22,6 +22,10 @@
 
 
 
+    <style name="barTextStyle" parent="Theme.Material">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
 
     <style name="myTabStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="color">@color/mars_color</item>

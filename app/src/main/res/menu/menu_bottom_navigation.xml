@@ -18,14 +18,14 @@
 
         <item
             android:id="@+id/navigation_earth"
-            android:title="@string/weather"
+            android:title="@string/earth"
             android:icon="@drawable/ic_earth_menu"
             app:showAsAction="always"/>
 
         <item
-            android:id="@+id/navigation_weather"
-            android:title="@string/weather"
-            android:icon="@drawable/ic_weather_menu"
+            android:id="@+id/navigation_moon"
+            android:title="@string/moon"
+            android:icon="@drawable/ic_moon_menu"
             app:showAsAction="always"/>
         <item
             android:id="@+id/navigation_settings"

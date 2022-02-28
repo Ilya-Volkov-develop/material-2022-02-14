@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:singleLine="true"
+        android:layout_marginTop="35dp"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip

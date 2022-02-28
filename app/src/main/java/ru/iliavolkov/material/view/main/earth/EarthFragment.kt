@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentEarthBinding
 import ru.iliavolkov.material.model.DateDTO
-import ru.iliavolkov.material.view.main.asteroid.AsteroidRecyclerViewAdapter
 import ru.iliavolkov.material.viewmodel.EarthViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAllDate
 import ru.iliavolkov.material.viewmodel.appstate.AppStateEarthImages

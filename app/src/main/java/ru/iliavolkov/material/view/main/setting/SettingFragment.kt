@@ -40,7 +40,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun clickChip() {
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.chipGroup.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
                 R.id.chipDay->{
                     requireActivity().getPreferences(Activity.MODE_PRIVATE).edit().putString("settingTheme","chipDay").apply()
