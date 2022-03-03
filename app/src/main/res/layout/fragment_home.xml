@@ -7,47 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".view.main.MainFragment">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <LinearLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutDescription="@xml/fragment_home_xml_constraintlayout_scene">
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayout"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/containerWikipedia"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_wiki"
-            app:endIconDrawable="@drawable/ic_search"
-            app:endIconMode="custom"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/search"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputEditText"
-                android:layout_width="match_parent"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/search_wiki"
+                app:endIconDrawable="@drawable/ic_search"
+                app:endIconMode="custom"
+                android:layout_weight="0"
+                android:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/wikipedia"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_wikipedia"
-            android:layout_margin="10dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/wikipedia"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_wikipedia"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wikipedia">
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -67,52 +72,44 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <ru.iliavolkov.material.utils.CustomImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/customImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+            android:scaleType="centerCrop"
+            android:layout_marginTop="10dp"/>
 
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youTubePlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/customImageView" />
+            android:visibility="gone"/>
+    </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/loadingLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            android:clickable="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView"
-            app:layout_constraintEnd_toEndOf="@+id/customImageView"
-            app:layout_constraintStart_toStartOf="@+id/customImageView"
-            app:layout_constraintTop_toBottomOf="@+id/tabs">
+    <FrameLayout
+        android:id="@+id/backgroundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/behavior_background"
+        android:alpha="0"/>
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        tools:visibility="gone">
 
-        <FrameLayout
-            android:id="@+id/homeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
-
-        <include
-            android:id="@+id/included"
-            layout="@layout/bottom_sheet_layout"/>
+    <include
+        android:id="@+id/included"
+        layout="@layout/bottom_sheet_layout"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,21 +1,30 @@
 package ru.iliavolkov.material.view.main.home
 
 import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.*
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
@@ -37,7 +46,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
 
-    private val viewModel: PictureOfTheDayViewModel by lazy { ViewModelProvider(this).get(PictureOfTheDayViewModel::class.java) }
+    private val viewModel: PictureOfTheDayViewModel by lazy { ViewModelProvider(this).get(
+        PictureOfTheDayViewModel::class.java
+    ) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -51,63 +62,63 @@ class HomeFragment : Fragment() {
         viewModel.getPictureOfTheDay(takeDate(0))
         binding.youTubePlayer.getPlayerUiController().showFullscreenButton(true)
         clickInputLayout()
+        clickImageWikipedia()
         tabLayoutInit()
         bottomSheet()
     }
 
-    private fun youTubePlay(path:String) {
-        binding.youTubePlayer.addYouTubePlayerListener(object :AbstractYouTubePlayerListener(){
+    private fun clickImageWikipedia() {
+        var isWikipediaVisibility = false
+        with(binding){
+            wikipedia.setOnClickListener {
+                isWikipediaVisibility = !isWikipediaVisibility
+                val changeBounds = ChangeBounds()
+                changeBounds.duration = 1500
+
+                TransitionManager.beginDelayedTransition(containerWikipedia, changeBounds)
+                val param = inputLayout.layoutParams as LinearLayout.LayoutParams
+                param.weight = if (isWikipediaVisibility) 9f else 0f
+                inputLayout.layoutParams = param
+            }
+        }
+    }
+
+    private fun youTubePlay(path: String) {
+        binding.youTubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(path, 0f)
             }
         })
-        //FullScreen но мне не понравилось что видео можно открыть на полный экран
-        //        binding.youTubePlayer.getPlayerUiController().setFullScreenButtonClickListener{
-        //            if (binding.youTubePlayer.isFullScreen()) binding.youTubePlayer.exitFullScreen()
-        //            else binding.youTubePlayer.enterFullScreen()
-        //        }
     }
 
     private fun bottomSheet() {
         behavior.addBottomSheetCallback(object :
-                BottomSheetBehavior.BottomSheetCallback() {
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED ->{
-                        animationBackground("out")
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        binding.backgroundContainer.isClickable = false
+                        ObjectAnimator.ofFloat(binding.backgroundContainer,View.ALPHA,1f,0f).setDuration(250).start()
+//                        animationBackground("out")
                     }
-                    BottomSheetBehavior.STATE_EXPANDED ->{
-                        animationBackground("in")
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        binding.backgroundContainer.isClickable = true
+                        ObjectAnimator.ofFloat(binding.backgroundContainer,View.ALPHA,0f,1f).setDuration(250).start()
+//                        animationBackground("in")
                     }
-                    BottomSheetBehavior.STATE_DRAGGING -> {}
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {}
-                    BottomSheetBehavior.STATE_HIDDEN -> {}
-                    BottomSheetBehavior.STATE_SETTLING -> {}
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
-    }
-
-    private fun animationBackground(state:String) {
-        var colorFrom:Int? = null
-        var colorTo:Int? = null
-        when(state){
-            "in"->{
-                colorFrom = resources.getColor(R.color.transparent)
-                colorTo = resources.getColor(R.color.behavior_background)
-            }
-            "out"->{
-                colorFrom = resources.getColor(R.color.behavior_background)
-                colorTo = resources.getColor(R.color.transparent)
-            }
-        }
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.duration = 250
-        colorAnimation.addUpdateListener { animator ->
-            binding.homeContainer.setBackgroundColor(animator.animatedValue as Int)
-        }
-        colorAnimation.start()
     }
 
     private fun tabLayoutInit() {
@@ -142,7 +153,8 @@ class HomeFragment : Fragment() {
     private fun clickInputLayout() {
         binding.inputLayout.setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+                data =
+                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
             })
         }
     }
@@ -157,17 +169,27 @@ class HomeFragment : Fragment() {
             }
             is AppStatePictureOfTheDay.Success -> {
                 with(binding) {
-                    loadingLayout.visibility = View.GONE
                     if (it.pictureData.mediaType == "image") {
+                        var flagImage = false
                         included.root.visibility = View.VISIBLE
-                        customImageView.load(it.pictureData.url)
                         included.bottomSheetDescriptionHeader.text = it.pictureData.title
                         included.bottomSheetDescription.text = it.pictureData.explanation
+                        customImageView.load(it.pictureData.url)
+                        customImageView.setOnClickListener {
+                            flagImage = !flagImage
+                            val autoTransition = AutoTransition().apply {
+                                duration = 250
+                            }
+                            TransitionManager.beginDelayedTransition(constraintLayout, autoTransition)
+                            it.layoutParams.height = if (flagImage) MATCH_PARENT else WRAP_CONTENT
+                            customImageView.scaleType = if (flagImage) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.CENTER_INSIDE
+
+                        }
                     } else {
                         youTubePlayer.visibility = View.VISIBLE
-                        included.root.visibility = View.GONE
                         youTubePlay(it.pictureData.url.replace("https://www.youtube.com/ember/", "").replace("?rel=0", ""))
                     }
+                    loadingLayout.visibility = View.GONE
                 }
             }
         }

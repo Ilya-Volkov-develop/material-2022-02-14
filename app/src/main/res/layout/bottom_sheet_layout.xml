@@ -9,6 +9,7 @@
     android:background="@drawable/frame_bottom_sheet"
     app:behavior_hideable="false"
     app:behavior_peekHeight="48dp"
+    android:visibility="gone"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View
