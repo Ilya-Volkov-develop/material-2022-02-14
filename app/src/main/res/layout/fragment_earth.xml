@@ -46,6 +46,21 @@
         app:layout_constraintTop_toBottomOf="@+id/calendarEarth" />
 
     <FrameLayout
+        android:id="@+id/backgroundContainerImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone"
+        android:alpha="0"/>
+
+    <ImageView
+        android:id="@+id/earthBigPicture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:alpha="0"/>
+
+    <FrameLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

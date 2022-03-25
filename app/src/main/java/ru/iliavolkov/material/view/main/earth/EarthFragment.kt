@@ -1,5 +1,6 @@
 package ru.iliavolkov.material.view.main.earth
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,26 +10,30 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.clear
+import coil.load
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentEarthBinding
 import ru.iliavolkov.material.model.DateDTO
 import ru.iliavolkov.material.viewmodel.EarthViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAllDate
 import ru.iliavolkov.material.viewmodel.appstate.AppStateEarthImages
+import java.lang.Exception
 import java.text.SimpleDateFormat
 
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class EarthFragment : Fragment() {
+class EarthFragment : Fragment(),OnItemClickListener {
 
     private var _binding: FragmentEarthBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: EarthViewModel by lazy { ViewModelProvider(this).get(EarthViewModel::class.java) }
-    private val adapter: EarthRecyclerViewAdapter by lazy { EarthRecyclerViewAdapter() }
+    private val adapter: EarthRecyclerViewAdapter by lazy { EarthRecyclerViewAdapter(this) }
     var minDate:Long? = null
     var maxDate:Long? = null
     val data = mutableListOf("","","")
+    private var flag = false
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -42,6 +47,18 @@ class EarthFragment : Fragment() {
         viewModel.getAllDate()
         binding.earthRecycler.adapter = adapter
         clickCalendar()
+        binding.earthBigPicture.setOnClickListener {
+            if (flag){
+                flag = !flag
+                binding.earthBigPicture.clear()
+                ObjectAnimator.ofFloat(binding.earthBigPicture,View.ALPHA,1f,0f).setDuration(500).start()
+                ObjectAnimator.ofFloat(binding.backgroundContainerImage,View.ALPHA,1f,0f).setDuration(500).start()
+                Thread.sleep(500).apply {
+                    binding.backgroundContainerImage.visibility = View.GONE
+                    binding.earthBigPicture.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun renderData(it: Any?) {
@@ -120,5 +137,16 @@ class EarthFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onItemClick(path: String) {
+        flag = !flag
+        if (flag) {
+            binding.earthBigPicture.load(path)
+            binding.backgroundContainerImage.visibility = View.VISIBLE
+            binding.earthBigPicture.visibility = View.VISIBLE
+            ObjectAnimator.ofFloat(binding.backgroundContainerImage, View.ALPHA, 0f, 1f).setDuration(500).start()
+            ObjectAnimator.ofFloat(binding.earthBigPicture,View.ALPHA,0f,1f).setDuration(500).start()
+        }
     }
 }

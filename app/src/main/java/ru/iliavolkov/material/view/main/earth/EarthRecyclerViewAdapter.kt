@@ -10,7 +10,7 @@ import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentEarthRecyclerViewItemBinding
 import ru.iliavolkov.material.model.Earth
 
-class EarthRecyclerViewAdapter: RecyclerView.Adapter<EarthRecyclerViewAdapter.ViewHolder>() {
+class EarthRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerView.Adapter<EarthRecyclerViewAdapter.ViewHolder>() {
 
     private var earthData:List<Earth> = listOf()
     private var data:List<String> = listOf()
@@ -39,6 +39,7 @@ class EarthRecyclerViewAdapter: RecyclerView.Adapter<EarthRecyclerViewAdapter.Vi
             FragmentEarthRecyclerViewItemBinding.bind(itemView).run {
                 date.text = earth.date
                 earthImage.load("https://epic.gsfc.nasa.gov/archive/natural/${data[0]}/${data[1]}/${data[2]}/png/${earth.image}.png")
+                root.setOnClickListener{ listener.onItemClick("https://epic.gsfc.nasa.gov/archive/natural/${data[0]}/${data[1]}/${data[2]}/png/${earth.image}.png") }
             }
         }
     }
