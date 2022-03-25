@@ -41,6 +41,8 @@ import java.util.*
 @Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
+    private var flagImage = false
+
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
 
     private var _binding: FragmentHomeBinding? = null
@@ -99,21 +101,15 @@ class HomeFragment : Fragment() {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         binding.backgroundContainer.isClickable = false
                         ObjectAnimator.ofFloat(binding.backgroundContainer,View.ALPHA,1f,0f).setDuration(250).start()
-//                        animationBackground("out")
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         binding.backgroundContainer.isClickable = true
                         ObjectAnimator.ofFloat(binding.backgroundContainer,View.ALPHA,0f,1f).setDuration(250).start()
-//                        animationBackground("in")
                     }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> { }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> { }
+                    BottomSheetBehavior.STATE_HIDDEN -> { }
+                    BottomSheetBehavior.STATE_SETTLING -> { }
                 }
             }
 
@@ -170,21 +166,11 @@ class HomeFragment : Fragment() {
             is AppStatePictureOfTheDay.Success -> {
                 with(binding) {
                     if (it.pictureData.mediaType == "image") {
-                        var flagImage = false
                         included.root.visibility = View.VISIBLE
                         included.bottomSheetDescriptionHeader.text = it.pictureData.title
                         included.bottomSheetDescription.text = it.pictureData.explanation
-                        customImageView.load(it.pictureData.url)
-                        customImageView.setOnClickListener {
-                            flagImage = !flagImage
-                            val autoTransition = AutoTransition().apply {
-                                duration = 250
-                            }
-                            TransitionManager.beginDelayedTransition(constraintLayout, autoTransition)
-                            it.layoutParams.height = if (flagImage) MATCH_PARENT else WRAP_CONTENT
-                            customImageView.scaleType = if (flagImage) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.CENTER_INSIDE
-
-                        }
+                        pictureOnTheDayImage.load(it.pictureData.url)
+                        clickPicture()
                     } else {
                         youTubePlayer.visibility = View.VISIBLE
                         youTubePlay(it.pictureData.url.replace("https://www.youtube.com/ember/", "").replace("?rel=0", ""))
@@ -194,6 +180,33 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun clickPicture() {
+        with(binding) {
+            pictureOnTheDayImage.setOnClickListener {
+                flagImage = !flagImage
+                val autoTransition = AutoTransition().apply { duration = 250 }
+                TransitionManager.beginDelayedTransition(constraintLayout, autoTransition)
+                if (flagImage){
+                    it.layoutParams.height = MATCH_PARENT
+                    pictureOnTheDayImage.scaleType =ImageView.ScaleType.CENTER
+                    binding.backgroundContainerImage.isClickable = true
+                    ObjectAnimator.ofFloat(binding.backgroundContainerImage,View.ALPHA,0f,1f).setDuration(500).start()
+                    ObjectAnimator.ofFloat(binding.included.root,View.ALPHA,1f,0f).setDuration(500).start()
+                    binding.included.root.visibility = View.GONE
+                } else {
+                    it.layoutParams.height = WRAP_CONTENT
+                    pictureOnTheDayImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    binding.backgroundContainerImage.isClickable = false
+                    ObjectAnimator.ofFloat(binding.backgroundContainerImage,View.ALPHA,1f,0f).setDuration(500).start()
+                    ObjectAnimator.ofFloat(binding.included.root,View.ALPHA,0f,1f).setDuration(500).start()
+                    binding.included.root.visibility = View.VISIBLE
+                }
+
+            }
+        }
+    }
+
 
     //при ошибке всплывает диалоговое окно
     private fun loadingFailed(textId: Int, code: Int) {
