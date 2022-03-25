@@ -18,7 +18,6 @@ import ru.iliavolkov.material.model.DateDTO
 import ru.iliavolkov.material.viewmodel.EarthViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAllDate
 import ru.iliavolkov.material.viewmodel.appstate.AppStateEarthImages
-import java.lang.Exception
 import java.text.SimpleDateFormat
 
 
@@ -58,6 +57,9 @@ class EarthFragment : Fragment(),OnItemClickListener {
                     binding.earthBigPicture.visibility = View.GONE
                 }
             }
+        }
+        binding.earthRecycler.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            binding.header.isSelected = binding.earthRecycler.canScrollVertically(-1)
         }
     }
 
