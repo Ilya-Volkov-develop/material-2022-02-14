@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/settingContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +14,8 @@
         android:orientation="horizontal"
         app:singleLine="true"
         android:layout_marginTop="35dp"
-        app:singleSelection="true">
+        app:singleSelection="true"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipDay"
@@ -34,4 +37,16 @@
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="@string/moon" />
     </com.google.android.material.chip.ChipGroup>
-</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textMovement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Стиль изменён"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

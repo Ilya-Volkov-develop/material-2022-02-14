@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import coil.clear
 import coil.load
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentEarthBinding
@@ -29,9 +28,9 @@ class EarthFragment : Fragment(),OnItemClickListener {
 
     private val viewModel: EarthViewModel by lazy { ViewModelProvider(this).get(EarthViewModel::class.java) }
     private val adapter: EarthRecyclerViewAdapter by lazy { EarthRecyclerViewAdapter(this) }
-    var minDate:Long? = null
-    var maxDate:Long? = null
-    val data = mutableListOf("","","")
+    private var minDate:Long? = null
+    private var maxDate:Long? = null
+    private val data = mutableListOf("","","")
     private var flag = false
 
 
@@ -49,16 +48,12 @@ class EarthFragment : Fragment(),OnItemClickListener {
         binding.earthBigPicture.setOnClickListener {
             if (flag){
                 flag = !flag
-                binding.earthBigPicture.clear()
-                ObjectAnimator.ofFloat(binding.earthBigPicture,View.ALPHA,1f,0f).setDuration(500).start()
-                ObjectAnimator.ofFloat(binding.backgroundContainerImage,View.ALPHA,1f,0f).setDuration(500).start()
-                Thread.sleep(500).apply {
-                    binding.backgroundContainerImage.visibility = View.GONE
-                    binding.earthBigPicture.visibility = View.GONE
-                }
+                binding.backgroundContainerImage.visibility = View.GONE
+                binding.earthBigPicture.visibility = View.GONE
+                binding.calendarEarth.isClickable = true
             }
         }
-        binding.earthRecycler.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.earthRecycler.setOnScrollChangeListener { _, _, _, _, _ ->
             binding.header.isSelected = binding.earthRecycler.canScrollVertically(-1)
         }
     }
@@ -147,6 +142,7 @@ class EarthFragment : Fragment(),OnItemClickListener {
             binding.earthBigPicture.load(path)
             binding.backgroundContainerImage.visibility = View.VISIBLE
             binding.earthBigPicture.visibility = View.VISIBLE
+            binding.calendarEarth.isClickable = false
             ObjectAnimator.ofFloat(binding.backgroundContainerImage, View.ALPHA, 0f, 1f).setDuration(500).start()
             ObjectAnimator.ofFloat(binding.earthBigPicture,View.ALPHA,0f,1f).setDuration(500).start()
         }

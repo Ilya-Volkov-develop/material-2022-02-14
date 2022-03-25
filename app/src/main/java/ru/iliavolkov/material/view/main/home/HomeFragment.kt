@@ -19,7 +19,9 @@ import androidx.annotation.NonNull
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.transition.*
+import androidx.transition.AutoTransition
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
@@ -31,7 +33,6 @@ import ru.iliavolkov.material.viewmodel.PictureOfTheDayViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStatePictureOfTheDay
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 @Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
