@@ -38,7 +38,10 @@ class EarthRecyclerViewAdapter(val listener: OnItemClickListener): RecyclerView.
         fun bind(earth: Earth, data: List<String>){
             FragmentEarthRecyclerViewItemBinding.bind(itemView).run {
                 date.text = earth.date
-                earthImage.load("https://epic.gsfc.nasa.gov/archive/natural/${data[0]}/${data[1]}/${data[2]}/png/${earth.image}.png")
+                earthImage.load("https://epic.gsfc.nasa.gov/archive/natural/${data[0]}/${data[1]}/${data[2]}/png/${earth.image}.png"){
+                    placeholder(R.drawable.progress_animation)
+                    error(R.drawable.ic_load_error)
+                }
                 root.setOnClickListener{ listener.onItemClick("https://epic.gsfc.nasa.gov/archive/natural/${data[0]}/${data[1]}/${data[2]}/png/${earth.image}.png") }
             }
         }

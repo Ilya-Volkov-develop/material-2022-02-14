@@ -64,20 +64,25 @@ class EarthFragment : Fragment(),OnItemClickListener {
 
             }
             is AppStateAllDate.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingImage.load(R.drawable.progress_animation){
+                    error(R.drawable.ic_load_error)
+                }
             }
             is AppStateAllDate.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingImage.load(0)
+                binding.header.visibility = View.VISIBLE
                 convertStringToDate(it.listAllDate)
             }
             is AppStateEarthImages.Error->{
 
             }
             is AppStateEarthImages.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingImage.load(R.drawable.progress_animation){
+                    error(R.drawable.ic_load_error)
+                }
             }
             is AppStateEarthImages.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingImage.load(0)
                 adapter.setEarthData(it.listEarthImages,data)
             }
         }

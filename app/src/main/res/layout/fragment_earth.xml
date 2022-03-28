@@ -8,8 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:visibility="gone"
         android:stateListAnimator="@animator/toolbar_elevation"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,8 +33,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="?actionBarSize"
             android:src="@drawable/date"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            android:layout_marginBottom="10dp"
             app:layout_constraintStart_toEndOf="@+id/dateEarth"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -61,19 +64,11 @@
         android:visibility="gone"
         android:alpha="0"/>
 
-    <FrameLayout
-        android:id="@+id/loadingLayout"
+    <ru.iliavolkov.material.utils.CustomImageView
+        android:id="@+id/loadingImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clickable="true"
-        android:visibility="gone">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

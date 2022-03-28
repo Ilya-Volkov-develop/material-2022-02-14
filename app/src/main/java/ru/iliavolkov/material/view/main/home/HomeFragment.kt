@@ -157,21 +157,27 @@ class HomeFragment : Fragment() {
                 loadingFailed(it.error, it.code)
             }
             is AppStatePictureOfTheDay.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.pictureOnTheDayImage.load(R.drawable.progress_animation){
+                    error(R.drawable.ic_load_error)
+                }
             }
             is AppStatePictureOfTheDay.Success -> {
+
                 with(binding) {
                     if (it.pictureData.mediaType == "image") {
+                        binding.pictureOnTheDayImage.load(0)
                         included.root.visibility = View.VISIBLE
                         included.bottomSheetDescriptionHeader.text = it.pictureData.title
                         included.bottomSheetDescription.text = it.pictureData.explanation
-                        pictureOnTheDayImage.load(it.pictureData.url)
+                        pictureOnTheDayImage.load(it.pictureData.url) {
+                            placeholder(R.drawable.progress_animation)
+                            error(R.drawable.ic_load_error)
+                        }
                         clickPicture()
                     } else {
                         youTubePlayer.visibility = View.VISIBLE
                         youTubePlay(it.pictureData.url.replace("https://www.youtube.com/ember/", "").replace("?rel=0", ""))
                     }
-                    loadingLayout.visibility = View.GONE
                 }
             }
         }
@@ -221,6 +227,7 @@ class HomeFragment : Fragment() {
         }
         dialog1?.setCancelable(false)
         ok.setOnClickListener {
+            viewModel.getPictureOfTheDay(takeDate(0))
             dialog1?.dismiss()
         }
         dialog1?.show()

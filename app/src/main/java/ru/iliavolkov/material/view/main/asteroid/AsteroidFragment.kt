@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidBinding
 import ru.iliavolkov.material.model.NearEarthObject
@@ -18,7 +19,6 @@ import ru.iliavolkov.material.viewmodel.appstate.AppStateAsteroid
 
 
 class AsteroidFragment : Fragment() {
-
 
     private var _binding: FragmentAsteroidBinding? = null
     private val binding: FragmentAsteroidBinding get() = _binding!!
@@ -35,6 +35,9 @@ class AsteroidFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getAsteroids()
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.setOnScrollChangeListener { _, _, _, _, _ ->
+            binding.header.isSelected = binding.recyclerView.canScrollVertically(-1)
+        }
     }
 
 
@@ -42,13 +45,16 @@ class AsteroidFragment : Fragment() {
     private fun renderData(it: AppStateAsteroid?) {
         when(it){
             is AppStateAsteroid.Error -> {
-                loadingFailed(it.error, it.code)
+                if (it.code != 0) loadingFailed(it.error, it.code)
+                else viewModel.getAsteroids()
             }
             is AppStateAsteroid.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingImage.load(R.drawable.progress_animation){
+                    error(R.drawable.ic_load_error)
+                }
             }
             is AppStateAsteroid.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingImage.load(0)
                 val asteroidData = mutableListOf<NearEarthObject>()
                 it.asteroidData.nearEarthObjects.values.toList().forEach {
                     it.forEach {
