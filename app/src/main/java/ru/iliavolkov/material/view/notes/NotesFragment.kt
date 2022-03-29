@@ -48,6 +48,10 @@ class NotesFragment : Fragment() {
             adapter.addNote()
             binding.notesRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
         }
+        requireActivity().runOnUiThread {
+
+        }
+
     }
 
 
