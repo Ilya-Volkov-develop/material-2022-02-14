@@ -23,10 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initToolbar()
         if (savedInstanceState == null){
-//            val fragmentTag = supportFragmentManager.findFragmentByTag("MainFragment")
-//            if(fragmentTag==null) {
-                supportFragmentManager.beginTransaction().replace(R.id.container, MainFragment.newInstance()).commit()
-//            }
+            supportFragmentManager.beginTransaction().replace(R.id.container, MainFragment.newInstance()).commit()
         }
     }
 
@@ -60,19 +57,7 @@ class MainActivity : AppCompatActivity() {
             toggle.syncState()
             binding.navigationView.setNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
-//                    R.id.navigation_home -> {
-//                        val fragmentTag = supportFragmentManager.findFragmentByTag("MainFragment")
-//                        if (fragmentTag == null) {
-//                            binding.drawerLayout.closeDrawers()
-//                            supportFragmentManager.beginTransaction()
-//                                    .replace(R.id.container, MainFragment.newInstance(), "MainFragment")
-//                                    .addToBackStack("")
-//                                    .commit()
-//                        }
-//                        return@setNavigationItemSelectedListener true
-//                    }
                     R.id.navigation_notes -> {
-
                         val fragmentTag = supportFragmentManager.findFragmentByTag("NotesFragment")
                         if (fragmentTag == null) {
                             binding.drawerLayout.closeDrawers()
@@ -86,43 +71,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 false
             }
-            //setNavigationItems()
         } catch (e: RuntimeException) {
             e.printStackTrace()
         }
     }
-
-    private fun setNavigationItems() {
-        binding.navigationView.setNavigationItemSelectedListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    val fragmentTag = supportFragmentManager.findFragmentByTag("MainFragment")
-                    if (fragmentTag == null) {
-                        binding.drawerLayout.closeDrawers()
-                        supportFragmentManager.beginTransaction()
-                                .add(R.id.container, MainFragment.newInstance(), "MainFragment")
-                                .addToBackStack("")
-                                .commit()
-                    }
-                    return@setNavigationItemSelectedListener true
-                }
-                R.id.navigation_notes -> {
-
-                    val fragmentTag = supportFragmentManager.findFragmentByTag("NotesFragment")
-                    if (fragmentTag == null) {
-                        binding.drawerLayout.closeDrawers()
-                        supportFragmentManager.beginTransaction()
-                                .add(R.id.container, NotesFragment.newInstance(), "NotesFragment")
-                                .addToBackStack("")
-                                .commit()
-                    }
-                    return@setNavigationItemSelectedListener true
-                }
-            }
-            false
-        }
-    }
-
 
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) binding.drawerLayout.close()
