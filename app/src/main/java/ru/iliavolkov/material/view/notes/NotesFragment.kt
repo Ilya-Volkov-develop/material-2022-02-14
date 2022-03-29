@@ -11,6 +11,7 @@ import ru.iliavolkov.material.model.*
 import ru.iliavolkov.material.utils.ITEM_CLOSE
 import ru.iliavolkov.material.utils.TYPE_HEADER
 import ru.iliavolkov.material.utils.TYPE_NOTE
+import ru.iliavolkov.material.view.main.asteroid.ItemTouchHelperCallback
 
 @Suppress("DEPRECATION")
 class NotesFragment : Fragment() {
@@ -30,6 +31,8 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = NotesRecyclerViewAdapter { itemTouchHelper.startDrag(it) }
         binding.notesRecyclerView.adapter = adapter
+        itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(binding.notesRecyclerView)
         listNotes.add(0,Pair(ITEM_CLOSE,Note("Заголовок",type = TYPE_HEADER)))
         listNotes.add(Pair(ITEM_CLOSE,Note("First","Description",false,type = TYPE_NOTE)))
         listNotes.add(Pair(ITEM_CLOSE,Note("Second","Description",false,type = TYPE_NOTE)))

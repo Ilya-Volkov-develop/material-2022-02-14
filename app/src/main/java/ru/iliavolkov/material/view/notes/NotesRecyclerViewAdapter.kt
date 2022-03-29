@@ -1,9 +1,12 @@
 package ru.iliavolkov.material.view.notes
 
+import android.annotation.SuppressLint
 import android.graphics.Color.LTGRAY
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.iliavolkov.material.R
@@ -63,11 +66,19 @@ class NotesRecyclerViewAdapter(
     inner class HeaderViewHolder(view: View):BaseViewHolder(view){ override fun bind(notesData:Note) {}}
 
     inner class NotesViewHolder(view:View):BaseViewHolder(view), ItemTouchHelperViewAdapter {
+        @SuppressLint("ClickableViewAccessibility")
         override fun bind(notesData: Note) {
             FragmentNotesRecyclerViewItemBinding.bind(itemView).run{
                 noteTitle.text = notesData.title
                 noteDescription.text = notesData.description
                 iconFavorite.load(if (notesData.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+                iconRemove.setOnClickListener { removeItem() }
+                iconMove.setOnTouchListener { _, event ->
+                    if(MotionEventCompat.getActionMasked(event)== MotionEvent.ACTION_DOWN){
+                        onStartDragListener.onStartDrag(this@NotesViewHolder)
+                    }
+                    false
+                }
             }
         }
 
@@ -84,14 +95,13 @@ class NotesRecyclerViewAdapter(
             itemView.setBackgroundColor(0)
             itemView.setBackgroundResource(R.drawable.frame_asteroid_item)
         }
-
-
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         notesData.removeAt(fromPosition).apply {
             notesData.add(toPosition,this)
         }
+
         notifyItemMoved(fromPosition, toPosition)
     }
 
