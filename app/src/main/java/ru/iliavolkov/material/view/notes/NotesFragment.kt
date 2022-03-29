@@ -29,13 +29,20 @@ class NotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = NotesRecyclerViewAdapter { itemTouchHelper.startDrag(it) }
+        adapter = NotesRecyclerViewAdapter( { itemTouchHelper.startDrag(it) },requireActivity())
         binding.notesRecyclerView.adapter = adapter
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.notesRecyclerView)
-        listNotes.add(0,Pair(ITEM_CLOSE,Note("Заголовок",type = TYPE_HEADER)))
-        listNotes.add(Pair(ITEM_CLOSE,Note("First","Description",false,type = TYPE_NOTE)))
-        listNotes.add(Pair(ITEM_CLOSE,Note("Second","Description",false,type = TYPE_NOTE)))
+        listNotes.add(0,Pair(ITEM_CLOSE,Note("Заголовок",favorite = true,type = TYPE_HEADER)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("1","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("2","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("3","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("4","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("5","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("6","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("7","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("8","Description",false,type = TYPE_NOTE)))
+        listNotes.add(Pair(ITEM_CLOSE,Note("9","Description",false,type = TYPE_NOTE)))
         adapter.setNotes(listNotes)
         binding.fabNotes.setOnClickListener {
             adapter.addNote()

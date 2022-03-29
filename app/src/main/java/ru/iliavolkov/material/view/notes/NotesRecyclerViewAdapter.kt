@@ -1,12 +1,17 @@
 package ru.iliavolkov.material.view.notes
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color.LTGRAY
+import android.os.HandlerThread
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.MainThread
 import androidx.core.view.MotionEventCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.iliavolkov.material.R
@@ -19,13 +24,16 @@ import ru.iliavolkov.material.utils.TYPE_NOTE
 import ru.iliavolkov.material.view.main.asteroid.ItemTouchHelperAdapter
 import ru.iliavolkov.material.view.main.asteroid.ItemTouchHelperViewAdapter
 import ru.iliavolkov.material.view.main.asteroid.OnStartDragListener
+import java.util.logging.Handler
 
 @Suppress("DEPRECATION")
 class NotesRecyclerViewAdapter(
-        private val onStartDragListener: OnStartDragListener
+        private val onStartDragListener: OnStartDragListener,
+        val requireActivity: FragmentActivity
 ): RecyclerView.Adapter<NotesRecyclerViewAdapter.BaseViewHolder>(), ItemTouchHelperAdapter {
 
     var notesData:MutableList<Pair<Int,Note>> = mutableListOf()
+    var countFavorite = 1
 
     fun setNotes(data:MutableList<Pair<Int,Note>>){
         this.notesData = data
@@ -67,11 +75,39 @@ class NotesRecyclerViewAdapter(
 
     inner class NotesViewHolder(view:View):BaseViewHolder(view), ItemTouchHelperViewAdapter {
         @SuppressLint("ClickableViewAccessibility")
-        override fun bind(notesData: Note) {
-            FragmentNotesRecyclerViewItemBinding.bind(itemView).run{
-                noteTitle.text = notesData.title
-                noteDescription.text = notesData.description
-                iconFavorite.load(if (notesData.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+        override fun bind(data: Note) {
+            FragmentNotesRecyclerViewItemBinding.bind(itemView).run {
+                noteTitle.text = data.title
+                noteDescription.text = data.description
+                iconFavorite.load(if (data.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+                iconFavorite.setOnClickListener {
+
+                    if (data.favorite) {
+                        countFavorite--
+                        iconFavorite.load(R.drawable.ic_favorite_border)
+                        val isFavorite = !data.favorite
+                        notesData.removeAt(layoutPosition).apply {
+                            notesData.add(countFavorite, Pair(this.first, Note(data.title, data.description, isFavorite, data.type)))
+                            notifyItemMoved(layoutPosition, countFavorite)
+                        }
+                    } else {
+                        countFavorite++
+                        iconFavorite.load(R.drawable.ic_favorite_filled)
+                        val isFavorite = !data.favorite
+                        notesData.removeAt(layoutPosition).apply {
+                            notesData.add(1, Pair(this.first, Note(data.title, data.description, isFavorite, data.type)))
+                            notifyItemMoved(layoutPosition, 1)
+                        }
+
+                    }
+                    notifyItemChanged(layoutPosition)
+                    Thread {
+                        Thread.sleep(400)
+                        requireActivity.runOnUiThread {
+                            notifyDataSetChanged()
+                        }
+                    }.start()
+                }
                 iconRemove.setOnClickListener { removeItem() }
                 iconMove.setOnTouchListener { _, event ->
                     if(MotionEventCompat.getActionMasked(event)== MotionEvent.ACTION_DOWN){
@@ -85,6 +121,7 @@ class NotesRecyclerViewAdapter(
         private fun removeItem() {
             notesData.removeAt(layoutPosition)
             notifyItemRemoved(layoutPosition)
+
         }
 
         override fun onItemSelected() {
