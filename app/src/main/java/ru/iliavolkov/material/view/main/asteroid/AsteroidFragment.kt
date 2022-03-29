@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import coil.load
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidBinding
@@ -23,7 +24,9 @@ class AsteroidFragment : Fragment() {
     private var _binding: FragmentAsteroidBinding? = null
     private val binding: FragmentAsteroidBinding get() = _binding!!
     private val viewModel: AsteroidViewModel by lazy { ViewModelProvider(this).get(AsteroidViewModel::class.java) }
-    private val adapter:AsteroidRecyclerViewAdapter by lazy { AsteroidRecyclerViewAdapter() }
+    lateinit var adapter:AsteroidRecyclerViewAdapter
+
+    lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAsteroidBinding.inflate(inflater, container, false)
@@ -34,10 +37,13 @@ class AsteroidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getAsteroids()
+        adapter = AsteroidRecyclerViewAdapter { itemTouchHelper.startDrag(it) }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.setOnScrollChangeListener { _, _, _, _, _ ->
             binding.header.isSelected = binding.recyclerView.canScrollVertically(-1)
         }
+        itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
 
@@ -55,10 +61,10 @@ class AsteroidFragment : Fragment() {
             }
             is AppStateAsteroid.Success -> {
                 binding.loadingImage.load(0)
-                val asteroidData = mutableListOf<NearEarthObject>()
+                val asteroidData = mutableListOf<Pair<Int,NearEarthObject>>()
                 it.asteroidData.nearEarthObjects.values.toList().forEach {
                     it.forEach {
-                        asteroidData.add(it)
+                        asteroidData.add(Pair(ITEM_CLOSE,it))
                     }
                 }
                 adapter.setAsteroids(asteroidData)
