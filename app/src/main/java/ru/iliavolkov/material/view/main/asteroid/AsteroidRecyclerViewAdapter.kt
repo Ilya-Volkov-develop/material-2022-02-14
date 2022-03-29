@@ -58,7 +58,7 @@ class AsteroidRecyclerViewAdapter(
                 }
                 attrContainer.visibility = if(data.first == ITEM_CLOSE) View.GONE else View.VISIBLE
                 moreInfo.visibility = if(data.first == ITEM_OPEN) View.GONE else View.VISIBLE
-                iconMove.setOnTouchListener { v, event ->
+                iconMove.setOnTouchListener { _, event ->
                     if(MotionEventCompat.getActionMasked(event)== MotionEvent.ACTION_DOWN){
                         onStartDragListener.onStartDrag(this@ViewHolder)
                     }

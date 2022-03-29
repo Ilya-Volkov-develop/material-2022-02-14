@@ -20,4 +20,5 @@
     <string name="name_asteroid">Название астеройда</string>
     <string name="select_date">Выберите дату</string>
     <string name="earth">Земля</string>
+    <string name="notes">Заметки</string>
 </resources>

@@ -26,4 +26,5 @@
     <string name="sub_title_bar" translatable="false">Единственный естественный спутник Земли</string>
     <string name="asteroids" translatable="false">Астероиды</string>
     <string name="more" translatable="false">Подробнее</string>
+    <string name="notes">Notes</string>
 </resources>
