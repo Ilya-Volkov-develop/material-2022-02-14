@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidRecyclerViewItemBinding
 import ru.iliavolkov.material.model.NearEarthObject
+import ru.iliavolkov.material.utils.ITEM_CLOSE
+import ru.iliavolkov.material.utils.ITEM_OPEN
 
-const val ITEM_CLOSE=0
-const val ITEM_OPEN=1
 @Suppress("DEPRECATION")
 class AsteroidRecyclerViewAdapter(
         private val onStartDragListener:OnStartDragListener

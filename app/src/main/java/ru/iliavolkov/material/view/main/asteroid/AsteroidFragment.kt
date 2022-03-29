@@ -15,6 +15,7 @@ import coil.load
 import ru.iliavolkov.material.R
 import ru.iliavolkov.material.databinding.FragmentAsteroidBinding
 import ru.iliavolkov.material.model.NearEarthObject
+import ru.iliavolkov.material.utils.ITEM_CLOSE
 import ru.iliavolkov.material.viewmodel.AsteroidViewModel
 import ru.iliavolkov.material.viewmodel.appstate.AppStateAsteroid
 

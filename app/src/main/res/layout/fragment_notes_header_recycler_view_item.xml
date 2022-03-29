@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notesItemHeder"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Title"
+    android:gravity="center"
+    android:textSize="25sp"
+    android:textColor="@color/black">
+</androidx.appcompat.widget.AppCompatTextView>
