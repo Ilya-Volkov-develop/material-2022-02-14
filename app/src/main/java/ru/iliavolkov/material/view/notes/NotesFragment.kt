@@ -22,7 +22,7 @@ import ru.iliavolkov.material.utils.TYPE_NOTE
 import ru.iliavolkov.material.view.main.asteroid.ItemTouchHelperCallback
 
 @Suppress("DEPRECATION")
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(), OnItemClickListener{
 
     private var _binding: FragmentNotesBinding? = null
     private val binding: FragmentNotesBinding get() = _binding!!
@@ -46,7 +46,7 @@ class NotesFragment : Fragment() {
                     favorite = shared.getBoolean("noteFav$count",false)))
             count++
         }
-        adapter = NotesRecyclerViewAdapter({ itemTouchHelper.startDrag(it) }, requireActivity())
+        adapter = NotesRecyclerViewAdapter({ itemTouchHelper.startDrag(it) }, requireActivity(),shared.getInt("countFavorite",1),this)
         binding.notesRecyclerView.adapter = adapter
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.notesRecyclerView)
@@ -103,8 +103,7 @@ class NotesFragment : Fragment() {
         fun newInstance() = NotesFragment()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
         adapter.filter.filter("")
         var count = 0
         val shared = requireActivity().getPreferences(Activity.MODE_PRIVATE).edit()
@@ -117,7 +116,59 @@ class NotesFragment : Fragment() {
             count++
         }
         shared.putInt("countNotes",adapter.notesData.size-1).apply()
+        shared.putInt("countFavorite",adapter.countFavorite).apply()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
+    }
+    override fun onItemClick(note: Note, position: Int) {
+        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val inflater: LayoutInflater? = LayoutInflater.from(requireContext())
+        val dialogNewNote: View = inflater!!.inflate(R.layout.dialog_new_note, null)
+        alertDialog.setView(dialogNewNote)
+        val dialog: Dialog? = alertDialog.create()
+        val save: Button = dialogNewNote.findViewById(R.id.btnSave)
+        val cancel:Button = dialogNewNote.findViewById(R.id.btnCancel)
+        val editTitle:EditText = dialogNewNote.findViewById(R.id.title)
+        editTitle.setText(note.title)
+        val editDesc:EditText = dialogNewNote.findViewById(R.id.description)
+        editDesc.setText(note.description)
+        val favoriteIcon:ImageView = dialogNewNote.findViewById(R.id.iconFavorite)
+        favoriteIcon.load(if (note.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+        var isFavorite = note.favorite
+        favoriteIcon.setOnClickListener {
+            if (!isFavorite) {
+                favoriteIcon.load(R.drawable.ic_favorite_filled)
+                adapter.countFavorite++
+            }
+            else {
+                favoriteIcon.load(R.drawable.ic_favorite_border)
+                adapter.countFavorite--
+            }
+            isFavorite = !isFavorite
+        }
+        save.setOnClickListener {
+            adapter.onItemDismiss(position)
+            if (isFavorite){
+                adapter.notesData.add(1,Note("${editTitle.text}", "${editDesc.text}", isFavorite, type = TYPE_NOTE))
+                adapter.notifyItemMoved(position, 1)
+            }else{
+                adapter.notesData.add(position,Note("${editTitle.text}", "${editDesc.text}", isFavorite, type = TYPE_NOTE))
+            }
+            Thread {
+                Thread.sleep(400)
+                requireActivity().runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
+            }.start()
+            dialog?.dismiss()
+        }
+        cancel.setOnClickListener { dialog?.dismiss() }
+        dialog?.setCancelable(false)
+        dialog?.show()
     }
 }
 

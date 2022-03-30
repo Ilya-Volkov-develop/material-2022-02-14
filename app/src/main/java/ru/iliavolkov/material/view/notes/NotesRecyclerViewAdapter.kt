@@ -26,11 +26,14 @@ import java.util.*
 @Suppress("DEPRECATION")
 class NotesRecyclerViewAdapter(
         private val onStartDragListener: OnStartDragListener,
-        val requireActivity: FragmentActivity
+        val requireActivity: FragmentActivity,
+        count:Int,
+        private val listener: OnItemClickListener
 ): RecyclerView.Adapter<NotesRecyclerViewAdapter.BaseViewHolder>(), ItemTouchHelperAdapter, Filterable {
 
     var notesData:MutableList<Note> = mutableListOf()
     var filteredNotesData:MutableList<Note> = mutableListOf()
+    var countFavorite = count
 
     fun setNotes(data: List<Note>){
         this.notesData = data as MutableList<Note>
@@ -65,6 +68,7 @@ class NotesRecyclerViewAdapter(
         if (newNote.favorite){
             notesData.add(1, Note(newNote.title, newNote.description, newNote.favorite, type = TYPE_NOTE))
             notifyItemInserted(1)
+            countFavorite++
         } else {
             notesData.add(Note(newNote.title, newNote.description, newNote.favorite, type = TYPE_NOTE))
             notifyItemInserted(itemCount - 1)
@@ -84,13 +88,15 @@ class NotesRecyclerViewAdapter(
                 iconFavorite.load(if (data.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
                 iconFavorite.setOnClickListener {
                     if (data.favorite) {
+                        countFavorite--
                         iconFavorite.load(R.drawable.ic_favorite_border)
                         val isFavorite = !data.favorite
                         notesData.removeAt(layoutPosition).apply {
-                            notesData.add(notesData.size-1, Note(data.title, data.description, isFavorite, data.type))
-                            notifyItemMoved(layoutPosition, notesData.size-1)
+                            notesData.add(countFavorite, Note(data.title, data.description, isFavorite, data.type))
+                            notifyItemMoved(layoutPosition, if (countFavorite == 0) 1 else countFavorite)
                         }
                     } else {
+                        countFavorite++
                         iconFavorite.load(R.drawable.ic_favorite_filled)
                         val isFavorite = !data.favorite
                         notesData.removeAt(layoutPosition).apply {
@@ -114,6 +120,7 @@ class NotesRecyclerViewAdapter(
                     }
                     false
                 }
+                root.setOnClickListener { listener.onItemClick(data,layoutPosition) }
             }
         }
 
