@@ -46,7 +46,8 @@ class NotesFragment : Fragment(), OnItemClickListener{
                     favorite = shared.getBoolean("noteFav$count",false)))
             count++
         }
-        adapter = NotesRecyclerViewAdapter({ itemTouchHelper.startDrag(it) }, requireActivity(),shared.getInt("countFavorite",1),this)
+        adapter = NotesRecyclerViewAdapter({ itemTouchHelper.startDrag(it) }, requireActivity(),
+                if (shared.getInt("countFavorite",1)<1) 1 else shared.getInt("countFavorite",1),this)
         binding.notesRecyclerView.adapter = adapter
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.notesRecyclerView)
@@ -98,32 +99,6 @@ class NotesFragment : Fragment(), OnItemClickListener{
         dialog?.show()
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = NotesFragment()
-    }
-
-    override fun onStop() {
-        adapter.filter.filter("")
-        var count = 0
-        val shared = requireActivity().getPreferences(Activity.MODE_PRIVATE).edit()
-        adapter.notesData.forEach {
-            if (count != 0) {
-                shared.putString("noteTitle$count", it.title).apply()
-                shared.putString("noteDesc$count", it.description).apply()
-                shared.putBoolean("noteFav$count", it.favorite).apply()
-            }
-            count++
-        }
-        shared.putInt("countNotes",adapter.notesData.size-1).apply()
-        shared.putInt("countFavorite",adapter.countFavorite).apply()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
     override fun onItemClick(note: Note, position: Int) {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         val inflater: LayoutInflater? = LayoutInflater.from(requireContext())
@@ -140,36 +115,62 @@ class NotesFragment : Fragment(), OnItemClickListener{
         favoriteIcon.load(if (note.favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
         var isFavorite = note.favorite
         favoriteIcon.setOnClickListener {
-            if (!isFavorite) {
-                favoriteIcon.load(R.drawable.ic_favorite_filled)
-                adapter.countFavorite++
-            }
-            else {
-                favoriteIcon.load(R.drawable.ic_favorite_border)
-                adapter.countFavorite--
-            }
+            if (!isFavorite) favoriteIcon.load(R.drawable.ic_favorite_filled)
+            else favoriteIcon.load(R.drawable.ic_favorite_border)
             isFavorite = !isFavorite
         }
         save.setOnClickListener {
-            adapter.onItemDismiss(position)
-            if (isFavorite){
-                adapter.notesData.add(1,Note("${editTitle.text}", "${editDesc.text}", isFavorite, type = TYPE_NOTE))
-                adapter.notifyItemMoved(position, 1)
-            }else{
-                adapter.notesData.add(position,Note("${editTitle.text}", "${editDesc.text}", isFavorite, type = TYPE_NOTE))
-            }
-            Thread {
-                Thread.sleep(400)
-                requireActivity().runOnUiThread {
-                    adapter.notifyDataSetChanged()
+            with(adapter){
+                if (isFavorite){
+                    if (!note.favorite) adapter.countFavorite++
+                    notesData.removeAt(position)
+                    notesData.add(1,Note("${editTitle.text}","${editDesc.text}",isFavorite))
+                    notifyItemMoved(position, 1)
+                    notifyItemChanged(1)
+                } else {
+                    if (note.favorite) countFavorite--
+                    notesData.removeAt(position)
+                    notesData.add(countFavorite,Note("${editTitle.text}","${editDesc.text}",isFavorite))
+                    notifyItemMoved(position, countFavorite)
+                    notifyItemChanged(countFavorite)
                 }
-            }.start()
+                Thread {
+                    Thread.sleep(400)
+                    requireActivity().runOnUiThread {
+                        notifyDataSetChanged()
+                    }
+                }.start()
+            }
             dialog?.dismiss()
         }
         cancel.setOnClickListener { dialog?.dismiss() }
         dialog?.setCancelable(false)
         dialog?.show()
     }
+    companion object {
+        @JvmStatic
+        fun newInstance() = NotesFragment()
+    }
+
+    override fun onStop() {
+        adapter.filter.filter("")
+        var count = 0
+        val shared = requireActivity().getPreferences(Activity.MODE_PRIVATE).edit()
+        adapter.filteredNotesData.forEach {
+            if (count != 0) {
+                shared.putString("noteTitle$count", it.title).apply()
+                shared.putString("noteDesc$count", it.description).apply()
+                shared.putBoolean("noteFav$count", it.favorite).apply()
+            }
+            count++
+        }
+        shared.putInt("countNotes",adapter.filteredNotesData.size-1).apply()
+        shared.putInt("countFavorite",adapter.countFavorite).apply()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
-
-

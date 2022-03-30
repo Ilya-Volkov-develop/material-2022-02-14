@@ -70,8 +70,8 @@ class NotesRecyclerViewAdapter(
             notifyItemInserted(1)
             countFavorite++
         } else {
-            notesData.add(Note(newNote.title, newNote.description, newNote.favorite, type = TYPE_NOTE))
-            notifyItemInserted(itemCount - 1)
+            notesData.add(countFavorite,Note(newNote.title, newNote.description, newNote.favorite, type = TYPE_NOTE))
+            notifyItemInserted(countFavorite)
         }
     }
 
@@ -89,25 +89,25 @@ class NotesRecyclerViewAdapter(
                 iconFavorite.setOnClickListener {
                     if (data.favorite) {
                         countFavorite--
+                        if (countFavorite<1) countFavorite = 1
                         iconFavorite.load(R.drawable.ic_favorite_border)
-                        val isFavorite = !data.favorite
                         notesData.removeAt(layoutPosition).apply {
-                            notesData.add(countFavorite, Note(data.title, data.description, isFavorite, data.type))
-                            notifyItemMoved(layoutPosition, if (countFavorite == 0) 1 else countFavorite)
+                            notesData.add(countFavorite, Note(data.title, data.description, !data.favorite, data.type))
+                            notifyItemMoved(layoutPosition, countFavorite)
                         }
                     } else {
                         countFavorite++
+                        if (countFavorite<1) countFavorite = 1
                         iconFavorite.load(R.drawable.ic_favorite_filled)
-                        val isFavorite = !data.favorite
                         notesData.removeAt(layoutPosition).apply {
-                            notesData.add(1, Note(data.title, data.description, isFavorite, data.type))
+                            notesData.add(1, Note(data.title, data.description, !data.favorite, data.type))
                             notifyItemMoved(layoutPosition, 1)
                         }
 
                     }
                     notifyItemChanged(layoutPosition)
                     Thread {
-                        Thread.sleep(400)
+                        Thread.sleep(300)
                         requireActivity.runOnUiThread {
                             notifyDataSetChanged()
                         }
@@ -149,6 +149,7 @@ class NotesRecyclerViewAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
+        if (notesData[position].favorite) countFavorite--
         notesData.removeAt(position)
         notifyItemRemoved(position)
     }

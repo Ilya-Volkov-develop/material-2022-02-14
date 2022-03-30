@@ -160,12 +160,14 @@ class HomeFragment : Fragment() {
                 binding.pictureOnTheDayImage.load(R.drawable.progress_animation){
                     error(R.drawable.ic_load_error)
                 }
+                binding.youTubePlayer.visibility = View.GONE
+                binding.included.root.visibility = View.GONE
             }
             is AppStatePictureOfTheDay.Success -> {
 
                 with(binding) {
                     if (it.pictureData.mediaType == "image") {
-                        binding.pictureOnTheDayImage.load(0)
+                        pictureOnTheDayImage.load(0)
                         included.root.visibility = View.VISIBLE
                         included.bottomSheetDescriptionHeader.text = it.pictureData.title
                         included.bottomSheetDescription.text = it.pictureData.explanation
@@ -175,6 +177,7 @@ class HomeFragment : Fragment() {
                         }
                         clickPicture()
                     } else {
+                        pictureOnTheDayImage.load(0)
                         youTubePlayer.visibility = View.VISIBLE
                         youTubePlay(it.pictureData.url.replace("https://www.youtube.com/ember/", "").replace("?rel=0", ""))
                     }
