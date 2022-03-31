@@ -43,7 +43,6 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private var flagImage = false
-
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
 
     private var _binding: FragmentHomeBinding? = null
