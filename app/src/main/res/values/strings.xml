@@ -21,10 +21,8 @@
     <string name="name_asteroid">Name of the asteroid</string>
     <string name="select_date">Select a date</string>
     <string name="earth">Earth</string>
-
-    <string name="large_text" translatable="false">Луна — единственный естественный спутник Земли. Самый близкий к Солнцу спутник планеты, так как у ближайших к Солнцу планет (Меркурия и Венеры) их нет. Второй по яркости объект на земном небосводе после Солнца и пятый по величине естественный спутник планеты Солнечной системы. Среднее расстояние между центрами Земли и Луны — 384 467 км (0,00257 а.е., ~30 диаметров Земли).Видимая звёздная величина полной Луны на земном небе — −12,71m. Освещённость, создаваемая полной Луной возле поверхности Земли при ясной погоде, составляет 0,25—1 лк.Луна появилась около 4,51 млрд лет назад, немного позже Земли. Наиболее популярна гипотеза о том, что Луна сформировалась из осколков, оставшихся после «Гигантского столкновения» Земли и Тейи — планеты, схожей по размерам с Марсом.Луна является единственным внеземным астрономическим объектом, на котором побывал человек.</string>
-    <string name="sub_title_bar" translatable="false">Единственный естественный спутник Земли</string>
-    <string name="asteroids" translatable="false">Астероиды</string>
+    <string name="large_text" translatable="false">The Moon is the only natural satellite of the Earth. The closest satellite of the planet to the Sun, since the planets closest to the Sun (Mercury and Venus) do not have them. The second brightest object in the earth\'s sky after the Sun and the fifth largest natural satellite of a planet in the solar system. The average distance between the centers of the Earth and the Moon is 384,467 km (0.00257 AU, ~30 Earth diameters).The apparent stellar magnitude of the full Moon in the earth\'s sky is −12.71m. The illumination created by the full Moon near the surface of the Earth in clear weather is 0.25-1 lux. The Moon appeared about 4.51 billion years ago, a little later than the Earth. The most popular hypothesis is that the Moon was formed from fragments left after the “Giant Collision” between the Earth and Theia, a planet similar in size to Mars. The Moon is the only extraterrestrial astronomical object visited by man.</string>
+    <string name="sub_title_bar" translatable="false">Earth\'s only natural satellite</string>
     <string name="more">More</string>
     <string name="notes">Notes</string>
     <string name="title">Title</string>

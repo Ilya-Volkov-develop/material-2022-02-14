@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">?superColor</item>
         <item name="colorOnPrimary">?superColor</item>
 
+        <item name="android:textViewStyle">@style/myTextView</item>
         <item name="textInputStyle">@style/myTextInputLayoutStyle</item>
         <item name="bottomNavigationStyle">@style/myBottomNavigationView</item>
         <item name="tabStyle">@style/myTabStyle</item>

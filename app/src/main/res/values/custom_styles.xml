@@ -20,7 +20,9 @@
 
 
 
-
+    <style name="myTextView" parent="Theme.Material">
+        <item name="fontFamily">@font/jua</item>
+    </style>
 
     <style name="barTextStyle" parent="Theme.Material">
         <item name="android:textSize">30sp</item>
