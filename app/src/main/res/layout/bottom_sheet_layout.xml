@@ -14,7 +14,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View
-        android:id="@+id/bottom_sheet_line"
+        android:id="@+id/bottomSheetLine"
         android:layout_width="50dp"
         android:layout_height="3dp"
         android:layout_marginTop="10dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bottom_sheet_description_header"
+        android:id="@+id/bottomSheetHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -35,11 +35,11 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_line"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetLine"
         tools:text="Two Clusters and a Comet" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bottom_sheet_description"
+        android:id="@+id/bottomSheetDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
@@ -47,6 +47,6 @@
         android:paddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_description_header"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetHeader"
         tools:text="This lovely starfield spans some four full moons." />
 </androidx.constraintlayout.widget.ConstraintLayout>

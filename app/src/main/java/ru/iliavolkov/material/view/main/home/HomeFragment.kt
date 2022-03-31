@@ -6,6 +6,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.BulletSpan
+import android.text.style.LineBackgroundSpan
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.AutoTransition
@@ -169,8 +174,21 @@ class HomeFragment : Fragment() {
                     if (it.pictureData.mediaType == "image") {
                         pictureOnTheDayImage.load(0)
                         included.root.visibility = View.VISIBLE
-                        included.bottomSheetDescriptionHeader.text = it.pictureData.title
-                        included.bottomSheetDescription.text = it.pictureData.explanation
+                        included.bottomSheetHeader.apply{
+                            val spannableString = SpannableString(it.pictureData.title)
+                            spannableString.setSpan(UnderlineSpan(),0,it.pictureData.title.length,0)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                                spannableString.setSpan(BulletSpan(30,ContextCompat.getColor(requireContext(),R.color.mars_color),15),0,it.pictureData.title.length,0)
+                            }
+                            text = spannableString
+                        }
+                        included.bottomSheetDescription.apply {
+                            val spannableString = SpannableString(it.pictureData.explanation)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                spannableString.setSpan(LineBackgroundSpan.Standard(ContextCompat.getColor(requireContext(),R.color.mars_color)),0,150,0)
+                            }
+                            text = spannableString
+                        }
                         pictureOnTheDayImage.load(it.pictureData.url) {
                             placeholder(R.drawable.progress_animation)
                             error(R.drawable.ic_load_error)
